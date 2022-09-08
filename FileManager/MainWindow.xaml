@@ -3,11 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FileManager"
+        xmlns:local="clr-namespace:FileManager" xmlns:viewmodel="clr-namespace:FileManager.MVVM.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="450" Width="800">
+    
+    <Window.DataContext>
+        <viewmodel:MainViewModel/>
+    </Window.DataContext>
+    
     <Grid>
-        
+        <ListView
+            ItemsSource="{Binding ElementsOfDirectory}"
+            BorderThickness="0"
+            SelectedItem="{Binding Element}"
+            Background="Transparent"
+            ItemContainerStyle="{StaticResource ListElement}" 
+            Margin="10,10,10,7"
+            />
     </Grid>
 </Window>
