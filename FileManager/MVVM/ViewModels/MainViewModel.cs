@@ -16,24 +16,37 @@ namespace FileManager.MVVM.ViewModels
         public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
 
         public IModel _selectedElement;
-        public IModel Element { get { return _selectedElement; } set { _selectedElement = value; OnPropertyChanged(); } }
+        public IModel Element { get { return _selectedElement; } 
+            set { _selectedElement = value; OnPropertyChanged(); } }
 
+        public RelayCommand OpenCommand { get; set; }
         public MainViewModel()
         {
             ElementsOfDirectory = new ObservableCollection<IModel>();
-
+            OpenCommand = new RelayCommand(o => );
             SetBaseElements();
         }
 
         private void SetBaseElements()
         {
 
-            string[] dirs = Directory.GetFiles(Directory.GetCurrentDirectory());
-            MessageBox.Show(Directory.GetCurrentDirectory() + "");
-            foreach (string item in dirs)
+            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory());
+            string[] dirs = Directory.GetDirectories(Directory.GetCurrentDirectory());
+
+            for(int i = 0; i < files.Length; i++)
             {
-                ElementsOfDirectory.Add(new FolderModel() { Name = item });
+                ElementsOfDirectory.Add(new FileModel() { Name = files[i] });
             }
+
+            for(int i = 0; i < dirs.Length; i++)
+            {
+                ElementsOfDirectory.Add(new FolderModel() { Name = dirs[i] });
+            }
+        }
+        
+        private void OpenFileInfo()
+        {
+
         }
     }
 }
