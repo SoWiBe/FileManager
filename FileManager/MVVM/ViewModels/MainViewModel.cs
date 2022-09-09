@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
+using System.Diagnostics;
 
 namespace FileManager.MVVM.ViewModels
 {
@@ -20,6 +21,7 @@ namespace FileManager.MVVM.ViewModels
             set { _selectedElement = value; OnPropertyChanged(); } }
 
         public RelayCommand OpenCommand { get; set; }
+
         public MainViewModel()
         {
             ElementsOfDirectory = new ObservableCollection<IModel>();
@@ -48,7 +50,7 @@ namespace FileManager.MVVM.ViewModels
         
         private void OpenFileOrFolder()
         {
-            MessageBox.Show(Element.Name);
+            Process.Start(Element.Name);
         }
 
         private void OpenFileInfo()
