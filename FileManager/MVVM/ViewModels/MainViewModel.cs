@@ -35,14 +35,13 @@ namespace FileManager.MVVM.ViewModels
             ElementsOfDirectory = new ObservableCollection<IModel>();
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
-            Info = "";
             SetBaseElements();
         }
 
         private void SetBaseElements()
         {
             string[] files = Directory.GetFiles(Directory.GetCurrentDirectory());
-            string[] dirs = Directory.GetDirectories(Directory.GetCurrentDirectory());
+            string[] dirs = Directory.GetDirectories("C:\\");
 
             for (int i = 0; i < dirs.Length; i++)
             {
@@ -65,9 +64,60 @@ namespace FileManager.MVVM.ViewModels
         private void OpenFileInfo()
         {
             FileInfo fileInfo = new FileInfo(Element.Name);
-            Info = "Дата создания: " + fileInfo.CreationTime.ToString() + "\n";
-            Info += "Размер: " + fileInfo.Length.ToString() + "\n";
-            MessageBox.Show("" + Info);
+            Info = "Type: " + Path.GetExtension(Element.Name) + "\n";
+            Info += "Directory Name: " + fileInfo.DirectoryName + "\n";
+            Info += "Creation Time: " + fileInfo.CreationTime.ToString() + "\n";
+           
+            if (CheckFileOrFolder(Element.Name))
+            {
+                Info += "Size: " + DirSize(new DirectoryInfo(Element.Name)) + " байт.\n";
+                Info += "Count Files: " + GetFilesCount(new DirectoryInfo(Element.Name)) + "\n";
+                return;
+            }
+
+            Info += "Size: " + fileInfo.Length + " byte.\n";
+
+        }
+
+        private long DirSize(DirectoryInfo d, long limit = 0)
+        {
+            try
+            {
+                // Add file sizes.
+                long Size = 0;
+                FileInfo[] fis = d.GetFiles();
+                foreach (FileInfo fi in fis)
+                {
+                    Size += fi.Length;
+                    if (limit > 0 && Size > limit)
+                        return Size;
+                }
+                // Add subdirectory sizes.
+                DirectoryInfo[] dis = d.GetDirectories();
+                foreach (DirectoryInfo di in dis)
+                {
+                    Size += DirSize(di, limit);
+                    if (limit > 0 && Size > limit)
+                        return Size;
+                }
+                return (Size);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return 0;
+            }
+            
+        }
+        private int GetFilesCount(DirectoryInfo d)
+        {
+            try
+            {
+                return d.GetFiles().Count();
+            }
+            catch(UnauthorizedAccessException ex)
+            {
+                return 0;
+            }
         }
 
         private bool CheckFileOrFolder(string path)
