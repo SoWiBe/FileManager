@@ -19,6 +19,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        
         <ListBox
             Grid.Column="0"
             ItemsSource="{Binding ElementsOfDirectory}"

@@ -25,7 +25,7 @@ namespace FileManager.MVVM.ViewModels
 
         public IModel _selectedElement;
         public IModel Element { get { return _selectedElement; } 
-            set { _selectedElement = value; OnPropertyChanged();  } }
+            set { _selectedElement = value; OnPropertyChanged(); OpenFileInfo(); } }
 
         public RelayCommand OpenCommand { get; set; }
         public RelayCommand OpenMoreInfoCommand { get; set; }
@@ -71,34 +71,28 @@ namespace FileManager.MVVM.ViewModels
             }
         }
 
-        private void OpenFileInfo()
+        private async void OpenFileInfo()
         {
-            
-            try
-            {
-                Info = "Type: " + Path.GetExtension(Element.Path) + "\n";
-
-                if (!CheckFileOrFolder(Element.Path))
-                {
-                    FileInfo fileInfo = new FileInfo(Element.Path);
-                    Info += "Directory Name: " + fileInfo.DirectoryName + "\n";
-                    Info += "Creation Time: " + fileInfo.CreationTime.ToString() + "\n";
-                    Info += "Size: " + fileInfo.Length + " byte.\n";
-                    return;
-                }
-                Info += "Size: " + DirSize(new DirectoryInfo(Element.Path)) + " байт.\n";
-                Info += "Count Files: " + GetFilesCount(new DirectoryInfo(Element.Path)) + "\n";
-                Info += "Count Files: " + GetFilesCount(new DirectoryInfo(Element.Path)) + "\n";
-                MessageBox.Show(Info);
-            } catch(NullReferenceException ex)
+            if(Element == null)
             {
                 return;
             }
-            
-            
+
+            Info = "Type: " + Path.GetExtension(Element.Path) + "\n";
+
+            if (!CheckFileOrFolder(Element.Path))
+            {
+                FileInfo fileInfo = new FileInfo(Element.Path);
+                Info += "Directory Name: " + fileInfo.DirectoryName + "\n";
+                Info += "Creation Time: " + fileInfo.CreationTime.ToString() + "\n";
+                Info += "Size: " + fileInfo.Length + " byte.\n";
+                return;
+            }
+            Info += "Size: " + await DirSize(new DirectoryInfo(Element.Path)) + " байт.\n";
+            Info += "Count Files: " + GetFilesCount(new DirectoryInfo(Element.Path)) + "\n";
         }
 
-        private long DirSize(DirectoryInfo d, long limit = 0)
+        private async Task<long> DirSize(DirectoryInfo d, long limit = 0)
         {
             try
             {
@@ -115,7 +109,7 @@ namespace FileManager.MVVM.ViewModels
                 DirectoryInfo[] dis = d.GetDirectories();
                 foreach (DirectoryInfo di in dis)
                 {
-                    Size += DirSize(di, limit);
+                    Size += await DirSize(di, limit);
                     if (limit > 0 && Size > limit)
                         return Size;
                 }
