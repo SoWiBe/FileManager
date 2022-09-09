@@ -23,3 +23,6 @@ Functional requirements:
 
 **That's all!**
 
+![image](https://user-images.githubusercontent.com/68136994/189360325-70a84cf8-9764-4832-b13b-2b0705e1a44f.png)
+
+
