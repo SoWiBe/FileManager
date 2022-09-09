@@ -15,6 +15,23 @@ namespace FileManager.MVVM.ViewModels
     public class MainViewModel : ObservableObject
     {
         public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
+        public ObservableCollection<IModel> SearchCollection { get; set; }
+
+
+        private string _searchText;
+        public string SearchText
+        {
+            get
+            {
+                return _searchText;
+            }
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged();
+                SearchFolderAndFile();
+            }
+        }
 
         private string _info;
         public string Info
@@ -29,6 +46,9 @@ namespace FileManager.MVVM.ViewModels
 
         public RelayCommand OpenCommand { get; set; }
         public RelayCommand OpenMoreInfoCommand { get; set; }
+        public RelayCommand SearchCommand { get; set; }
+
+
 
         public MainViewModel()
         {
@@ -36,6 +56,7 @@ namespace FileManager.MVVM.ViewModels
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
             SetFoldersAndFiles("C:\\");
+            
         }
 
         private async Task<string> SetFoldersAndFiles(string path)
@@ -53,7 +74,38 @@ namespace FileManager.MVVM.ViewModels
             {
                 ElementsOfDirectory.Add(new FileModel() { Name = new FileInfo(files[i]).Name, Path = files[i], Icon = "/Images/files.png" });
             }
+
+            SetCollection(SearchCollection, ElementsOfDirectory);
             return "Success!";
+        }
+
+        private void SearchFolderAndFile()
+        {
+
+            if(SearchText.Equals(""))
+            {
+                MessageBox.Show(SearchCollection.Count() + "");
+                ElementsOfDirectory = SearchCollection;
+                return;
+            }
+
+            var searchedCollection = ElementsOfDirectory.Where(x => x.Name.Contains(SearchText));
+            ElementsOfDirectory.Clear();
+            SetCollection(ElementsOfDirectory, searchedCollection);
+        }
+
+        private void SetCollection(ObservableCollection<IModel> mainCollection, ObservableCollection<IModel> writeCollection)
+        {
+            for (int i = 0; i < writeCollection.Count(); i++)
+            {
+                if (CheckFileOrFolder(writeCollection.ElementAt(i).Path))
+                {
+                    mainCollection.Add(new FolderModel() { Name = new DirectoryInfo(writeCollection.ElementAt(i).Path).Name, Path = writeCollection.ElementAt(i).Path, Icon = "/Images/folder.png" });
+                    continue;
+                }
+                mainCollection.Add(new FileModel() { Name = new FileInfo(writeCollection.ElementAt(i).Path).Name, Path = writeCollection.ElementAt(i).Path, Icon = "/Images/files.png" });
+
+            }
         }
 
         private void ClearFoldersAndFiles()
@@ -69,27 +121,33 @@ namespace FileManager.MVVM.ViewModels
             }
         }
 
+        //activating after one click on the listbox
         private async void OpenFileInfo()
         {
             if(Element == null)
             {
                 return;
             }
-
-            Info = "Type: " + Path.GetExtension(Element.Path) + "\n";
-
+            //general info
+            Info = "Name: " + Element.Name + "\n";
+            
+            //check our selected element folder or file
             if (!CheckFileOrFolder(Element.Path))
             {
+                //write file info
                 FileInfo fileInfo = new FileInfo(Element.Path);
                 Info += "Directory Name: " + fileInfo.DirectoryName + "\n";
                 Info += "Creation Time: " + fileInfo.CreationTime.ToString() + "\n";
                 Info += "Size: " + fileInfo.Length + " byte.\n";
                 return;
             }
+            //write folder info
+            Info += "Type: Folder\n";
             Info += "Size: " + await DirSize(new DirectoryInfo(Element.Path)) + " байт.\n";
             Info += "Count Files: " + GetFilesCount(new DirectoryInfo(Element.Path)) + "\n";
         }
 
+        //caculating folder size
         private async Task<long> DirSize(DirectoryInfo d, long limit = 0)
         {
             try
@@ -119,6 +177,7 @@ namespace FileManager.MVVM.ViewModels
             }
             
         }
+
         private int GetFilesCount(DirectoryInfo d)
         {
             try
