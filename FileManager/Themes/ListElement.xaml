@@ -4,10 +4,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
-                    <Border Background="Transparent"
+                    <Border Background="{Binding Color}"
                             Height="20">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <StackPanel VerticalAlignment="Center">
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <Image
+                                    Source="{Binding Icon}"
+                                    Height="9"
+                                    Width="9"
+                                    />
                                 <Label VerticalAlignment="Center"
                                        Content="{Binding Name}" 
                                        FontFamily="Roboto" 

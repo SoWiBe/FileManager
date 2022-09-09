@@ -38,24 +38,22 @@ namespace FileManager.MVVM.ViewModels
             SetFoldersAndFiles("C:\\");
         }
 
-        private void SetFoldersAndFiles(string path)
+        private async Task<string> SetFoldersAndFiles(string path)
         {
             ClearFoldersAndFiles();
             string[] files = Directory.GetFiles(path);
             string[] dirs = Directory.GetDirectories(path);
 
-
             for (int i = 0; i < dirs.Length; i++)
             {
-                ElementsOfDirectory.Add(new FolderModel() { Name = new DirectoryInfo(dirs[i]).Name, Path = dirs[i] });
+                ElementsOfDirectory.Add(new FolderModel() { Name = new DirectoryInfo(dirs[i]).Name, Path = dirs[i], Icon = "/Images/folder.png" });
             }
 
             for (int i = 0; i < files.Length; i++)
             {
-                ElementsOfDirectory.Add(new FileModel() { Name = new FileInfo(files[i]).Name, Path = files[i] });
+                ElementsOfDirectory.Add(new FileModel() { Name = new FileInfo(files[i]).Name, Path = files[i], Icon = "/Images/files.png" });
             }
-
-            
+            return "Success!";
         }
 
         private void ClearFoldersAndFiles()
@@ -63,11 +61,11 @@ namespace FileManager.MVVM.ViewModels
             ElementsOfDirectory.Clear();
         }
 
-        private void OpenFileOrFolder()
+        private async void OpenFileOrFolder()
         {
             if (CheckFileOrFolder(Element.Path))
             {
-                SetFoldersAndFiles(Element.Path);
+                await SetFoldersAndFiles(Element.Path);
             }
         }
 
