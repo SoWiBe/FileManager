@@ -8,8 +8,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
-                    <Border CornerRadius="25"
-                            Background="#EFF6FC">
+                    <Border CornerRadius="10"
+                            Background="LightPink">
                         <Grid>
 
                             <TextBox VerticalAlignment="Stretch"
@@ -21,7 +21,7 @@
                                      BorderThickness="0"
                                      Foreground="Gray"
                                      CaretBrush="Gray"
-                                     Margin="40 0 0 0"
+                                     Margin="5 0 0 0"
                                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox.InputBindings>
                                     <KeyBinding Command="{Binding SearchCommand}" Key="Return"/>
@@ -32,7 +32,7 @@
                                        Text="Search"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
-                                       Margin="40 0 0 0"
+                                       Margin="5 0 0 0"
                                        Foreground="Gray">
 
                                 <TextBlock.Style>

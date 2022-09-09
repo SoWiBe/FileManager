@@ -62,6 +62,7 @@ namespace FileManager.MVVM.ViewModels
 
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
+            Info = "Just some click to file or folder)";
 
             SetFoldersAndFiles("C:\\");
             
@@ -127,6 +128,7 @@ namespace FileManager.MVVM.ViewModels
             if (CheckFileOrFolder(Element.Path))
             {
                 await SetFoldersAndFiles(Element.Path);
+                return;
             }
             //write info about file in db
             await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() });

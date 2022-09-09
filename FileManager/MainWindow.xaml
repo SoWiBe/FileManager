@@ -14,6 +14,7 @@
         <viewmodel:MainViewModel/>
     </Window.DataContext>
 
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -37,6 +38,7 @@
             BorderThickness="0"
             SelectedItem="{Binding Element}"
             Background="Transparent"
+            
             ItemContainerStyle="{StaticResource ListElement}" 
             Margin="10,10,10,7">
             <i:Interaction.Triggers>
@@ -54,9 +56,36 @@
             Grid.Row="1"
             Text="{Binding Info, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Foreground="Black"
-            FontSize="9"
-            />
-        
-        
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="10"
+            >
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="FontFamily" Value="Montserrat"/>
+                    <Setter Property="FontSize" Value="11"/>
+                    <Setter Property="FontWeight" Value="Light"/>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <Label
+            Grid.Column="1"
+            Content="Additional Information"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            >
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="FontFamily" Value="Montserrat"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+            </Label.Style>
+        </Label>
+
+
     </Grid>
 </Window>
