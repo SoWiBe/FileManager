@@ -16,7 +16,12 @@ namespace FileManager.MVVM.ViewModels
     {
         public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
 
-        public string Info { get; set; }
+        private string _info;
+        public string Info
+        {
+            get { return _info; }
+            set { _info = value; OnPropertyChanged(); }
+        }
 
         public IModel _selectedElement;
         public IModel Element { get { return _selectedElement; } 
@@ -30,6 +35,7 @@ namespace FileManager.MVVM.ViewModels
             ElementsOfDirectory = new ObservableCollection<IModel>();
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
+            Info = "";
             SetBaseElements();
         }
 
@@ -58,7 +64,6 @@ namespace FileManager.MVVM.ViewModels
 
         private void OpenFileInfo()
         {
-            
             FileInfo fileInfo = new FileInfo(Element.Name);
             Info = "Дата создания: " + fileInfo.CreationTime.ToString() + "\n";
             Info += "Размер: " + fileInfo.Length.ToString() + "\n";

@@ -43,8 +43,9 @@
 
         <TextBlock
             Grid.Column="1"
-            Text="{Binding Info}"
-            
+            Text="{Binding Info, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Foreground="Black"
+            FontSize="9"
             />
     </Grid>
 </Window>
