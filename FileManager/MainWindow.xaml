@@ -8,32 +8,101 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="FileManager"
-        Height="450" Width="800">
+        Height="450" 
+        Width="800" 
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <viewmodel:MainViewModel/>
     </Window.DataContext>
 
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="9*"/>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="184*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <Border Grid.ColumnSpan="2" Grid.Row="0"
+                Background="Green"
+                MouseDown="Border_MouseDown">
+
+            <Grid HorizontalAlignment="Stretch"
+                  Margin="18 0 10 0">
+                <Label Content="FileManager"
+                       Foreground="White"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"  
+                       HorizontalAlignment="Left"
+                       />
+                <StackPanel HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                    <Button Width="20" Height="20"
+                            x:Name="btnMinimize"
+                            Content="🗕"
+                            Padding="0 0 0 2"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            Click="btnMinimize_Click"/>
+                    <Button Width="20" Height="20"
+                            Content="☐"
+                            x:Name="btnMaximize"
+                            Margin="0 1 0 0"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            Click="btnMaximize_Click"/>
+                    <Button Width="20" Height="20"
+                            Content="🗙"
+                            x:Name="btnClose"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            Click="btnClose_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
         <TextBox
             Style="{StaticResource SearchTextBox}" 
             Width="150"
+            Height="25"
             HorizontalAlignment="Left"
+            Grid.Row="1" Margin="8,8,0,8"
             />
 
+        <Label
+            Grid.Column="1"
+            Grid.Row="1"
+            Content="Additional Information"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" Height="34" Width="254"
+            >
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="FontFamily" Value="Montserrat"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+            </Label.Style>
+        </Label>
         <ListBox
             Grid.Column="0"
-            Grid.Row="1"
+            Grid.Row="2"
             ItemsSource="{Binding ElementsOfDirectory}"
             BorderThickness="0"
             SelectedItem="{Binding Element}"
@@ -53,12 +122,12 @@
 
         <TextBlock
             Grid.Column="1"
-            Grid.Row="1"
+            Grid.Row="2"
             Text="{Binding Info, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Foreground="Black"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="10"
+            Margin="10,10,0,0"
             >
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
@@ -70,21 +139,7 @@
             </TextBlock.Style>
         </TextBlock>
 
-        <Label
-            Grid.Column="1"
-            Content="Additional Information"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            >
-            <Label.Style>
-                <Style TargetType="Label">
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="FontFamily" Value="Montserrat"/>
-                    <Setter Property="FontSize" Value="20"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                </Style>
-            </Label.Style>
-        </Label>
+
 
 
     </Grid>
