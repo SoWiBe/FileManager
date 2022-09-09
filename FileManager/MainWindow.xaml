@@ -15,14 +15,19 @@
     </Window.DataContext>
     
     <Grid>
-        <ListView
+        <ListBox
             ItemsSource="{Binding ElementsOfDirectory}"
             BorderThickness="0"
             SelectedItem="{Binding Element}"
             Background="Transparent"
             ItemContainerStyle="{StaticResource ListElement}" 
             Margin="10,10,10,7">
-            
-        </ListView>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction 
+                        Command="{Binding OpenCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
     </Grid>
 </Window>

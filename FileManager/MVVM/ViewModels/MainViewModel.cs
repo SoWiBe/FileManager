@@ -23,7 +23,7 @@ namespace FileManager.MVVM.ViewModels
         public MainViewModel()
         {
             ElementsOfDirectory = new ObservableCollection<IModel>();
-            OpenCommand = new RelayCommand(o => );
+            OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             SetBaseElements();
         }
 
@@ -33,17 +33,24 @@ namespace FileManager.MVVM.ViewModels
             string[] files = Directory.GetFiles(Directory.GetCurrentDirectory());
             string[] dirs = Directory.GetDirectories(Directory.GetCurrentDirectory());
 
-            for(int i = 0; i < files.Length; i++)
+            for (int i = 0; i < dirs.Length; i++)
+            {
+                ElementsOfDirectory.Add(new FolderModel() { Name = dirs[i] });
+            }
+
+            for (int i = 0; i < files.Length; i++)
             {
                 ElementsOfDirectory.Add(new FileModel() { Name = files[i] });
             }
 
-            for(int i = 0; i < dirs.Length; i++)
-            {
-                ElementsOfDirectory.Add(new FolderModel() { Name = dirs[i] });
-            }
+            
         }
         
+        private void OpenFileOrFolder()
+        {
+            MessageBox.Show(Element.Name);
+        }
+
         private void OpenFileInfo()
         {
 
