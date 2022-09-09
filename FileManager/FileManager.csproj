@@ -251,6 +251,7 @@
     <Resource Include="Images\back.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="createdb.sql" />
     <Content Include="DB\FilesModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FilesModel.Context.cs</LastGenOutput>
