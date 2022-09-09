@@ -9,15 +9,17 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
 using System.Diagnostics;
+using FileManager.DB;
 
 namespace FileManager.MVVM.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
+        //main collection folders and files
         public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
         public ObservableCollection<IModel> SearchCollection { get; set; }
 
-
+        //search text for writing in textbox and use this for check available element in collection
         private string _searchText;
         public string SearchText
         {
@@ -29,10 +31,11 @@ namespace FileManager.MVVM.ViewModels
             {
                 _searchText = value;
                 OnPropertyChanged();
-                SearchFolderAndFile();
+                //SearchFolderAndFile();
             }
         }
 
+        //information about selected file or folder
         private string _info;
         public string Info
         {
@@ -40,10 +43,13 @@ namespace FileManager.MVVM.ViewModels
             set { _info = value; OnPropertyChanged(); }
         }
 
+        //selected model for click on the listbox
         public IModel _selectedElement;
         public IModel Element { get { return _selectedElement; } 
             set { _selectedElement = value; OnPropertyChanged(); OpenFileInfo(); } }
 
+
+        //create commands for communication with buttons, doubleclicks and etc
         public RelayCommand OpenCommand { get; set; }
         public RelayCommand OpenMoreInfoCommand { get; set; }
         public RelayCommand SearchCommand { get; set; }
@@ -53,12 +59,15 @@ namespace FileManager.MVVM.ViewModels
         public MainViewModel()
         {
             ElementsOfDirectory = new ObservableCollection<IModel>();
+
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
+
             SetFoldersAndFiles("C:\\");
             
         }
 
+        //show all folders and files
         private async Task<string> SetFoldersAndFiles(string path)
         {
             ClearFoldersAndFiles();
@@ -75,24 +84,24 @@ namespace FileManager.MVVM.ViewModels
                 ElementsOfDirectory.Add(new FileModel() { Name = new FileInfo(files[i]).Name, Path = files[i], Icon = "/Images/files.png" });
             }
 
-            SetCollection(SearchCollection, ElementsOfDirectory);
+            //SetCollection(SearchCollection, ElementsOfDirectory);
             return "Success!";
         }
 
-        private void SearchFolderAndFile()
-        {
+        //private void SearchFolderAndFile()
+        //{
 
-            if(SearchText.Equals(""))
-            {
-                MessageBox.Show(SearchCollection.Count() + "");
-                ElementsOfDirectory = SearchCollection;
-                return;
-            }
+        //    if(SearchText.Equals(""))
+        //    {
+        //        MessageBox.Show(SearchCollection.Count() + "");
+        //        ElementsOfDirectory = SearchCollection;
+        //        return;
+        //    }
 
-            var searchedCollection = ElementsOfDirectory.Where(x => x.Name.Contains(SearchText));
-            ElementsOfDirectory.Clear();
-            SetCollection(ElementsOfDirectory, searchedCollection);
-        }
+        //    var searchedCollection = ElementsOfDirectory.Where(x => x.Name.Contains(SearchText));
+        //    ElementsOfDirectory.Clear();
+        //    SetCollection(ElementsOfDirectory, searchedCollection);
+        //}
 
         private void SetCollection(ObservableCollection<IModel> mainCollection, ObservableCollection<IModel> writeCollection)
         {
@@ -119,6 +128,9 @@ namespace FileManager.MVVM.ViewModels
             {
                 await SetFoldersAndFiles(Element.Path);
             }
+
+            //write info about file in db
+            await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() }); ;
         }
 
         //activating after one click on the listbox
