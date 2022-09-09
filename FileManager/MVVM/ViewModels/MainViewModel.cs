@@ -128,9 +128,13 @@ namespace FileManager.MVVM.ViewModels
             {
                 await SetFoldersAndFiles(Element.Path);
             }
-
             //write info about file in db
-            await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() }); ;
+            await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() });
+
+
+            System.Diagnostics.Process.Start(Element.Path);
+
+
         }
 
         //activating after one click on the listbox
