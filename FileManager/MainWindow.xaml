@@ -15,7 +15,12 @@
     </Window.DataContext>
     
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <ListBox
+            Grid.Column="0"
             ItemsSource="{Binding ElementsOfDirectory}"
             BorderThickness="0"
             SelectedItem="{Binding Element}"
@@ -23,11 +28,23 @@
             ItemContainerStyle="{StaticResource ListElement}" 
             Margin="10,10,10,7">
             <i:Interaction.Triggers>
+                
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction 
                         Command="{Binding OpenCommand}"/>
                 </i:EventTrigger>
+                
+                <i:EventTrigger EventName="">
+                    <i:InvokeCommandAction 
+                        Command="{Binding OpenMoreInfoCommand}"/>
+                </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>
+
+        <TextBlock
+            Grid.Column="1"
+            Text="{Binding Info}"
+            
+            />
     </Grid>
 </Window>

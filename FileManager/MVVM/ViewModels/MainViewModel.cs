@@ -16,22 +16,25 @@ namespace FileManager.MVVM.ViewModels
     {
         public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
 
+        public string Info { get; set; }
+
         public IModel _selectedElement;
         public IModel Element { get { return _selectedElement; } 
-            set { _selectedElement = value; OnPropertyChanged(); } }
+            set { _selectedElement = value; OnPropertyChanged(); OpenFileInfo(); } }
 
         public RelayCommand OpenCommand { get; set; }
+        public RelayCommand OpenMoreInfoCommand { get; set; }
 
         public MainViewModel()
         {
             ElementsOfDirectory = new ObservableCollection<IModel>();
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
+            OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
             SetBaseElements();
         }
 
         private void SetBaseElements()
         {
-
             string[] files = Directory.GetFiles(Directory.GetCurrentDirectory());
             string[] dirs = Directory.GetDirectories(Directory.GetCurrentDirectory());
 
@@ -47,7 +50,7 @@ namespace FileManager.MVVM.ViewModels
 
             
         }
-        
+
         private void OpenFileOrFolder()
         {
             Process.Start(Element.Name);
@@ -55,7 +58,21 @@ namespace FileManager.MVVM.ViewModels
 
         private void OpenFileInfo()
         {
+            
+            FileInfo fileInfo = new FileInfo(Element.Name);
+            Info = "Дата создания: " + fileInfo.CreationTime.ToString() + "\n";
+            Info += "Размер: " + fileInfo.Length.ToString() + "\n";
+            MessageBox.Show("" + Info);
+        }
 
+        private bool CheckFileOrFolder(string path)
+        {
+            FileAttributes attr = File.GetAttributes(path);
+            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

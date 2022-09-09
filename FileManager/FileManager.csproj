@@ -68,9 +68,6 @@
     </Compile>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
-    <Compile Include="MVVM\IDialogService.cs" />
-    <Compile Include="MVVM\IFileService.cs" />
-    <Compile Include="MVVM\MainDialogService.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
