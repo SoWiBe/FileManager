@@ -10,6 +10,6 @@ namespace FileManager.MVVM.Models
     {
         public string Name { get; set; }
         public string Size { get; set ; }
-       
+        public string Path { get; set; }
     }
 }

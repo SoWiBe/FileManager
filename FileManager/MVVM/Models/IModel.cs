@@ -8,6 +8,7 @@ namespace FileManager.MVVM.Models
 {
     public interface IModel
     {
+        string Path { get; set; }
         string Name { get; set; }
         string Size { get; set; }
     }

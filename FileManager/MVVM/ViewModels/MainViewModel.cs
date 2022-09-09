@@ -35,51 +35,64 @@ namespace FileManager.MVVM.ViewModels
             ElementsOfDirectory = new ObservableCollection<IModel>();
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
-            SetBaseElements();
+            SetFoldersAndFiles("C:\\");
         }
 
-        private void SetBaseElements()
+        private void SetFoldersAndFiles(string path)
         {
-            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory());
-            string[] dirs = Directory.GetDirectories("C:\\");
+            ClearFoldersAndFiles();
+            string[] files = Directory.GetFiles(path);
+            string[] dirs = Directory.GetDirectories(path);
+
 
             for (int i = 0; i < dirs.Length; i++)
             {
-                ElementsOfDirectory.Add(new FolderModel() { Name = dirs[i] });
+                ElementsOfDirectory.Add(new FolderModel() { Name = new DirectoryInfo(dirs[i]).Name, Path = dirs[i] });
             }
 
             for (int i = 0; i < files.Length; i++)
             {
-                ElementsOfDirectory.Add(new FileModel() { Name = files[i] });
+                ElementsOfDirectory.Add(new FileModel() { Name = new FileInfo(files[i]).Name, Path = files[i] });
             }
 
             
         }
 
-        private void OpenFileOrFolder()
+        private void ClearFoldersAndFiles()
         {
-            Process.Start(Element.Name);
+            ElementsOfDirectory.Clear();
         }
 
-        private void OpenFileInfo()
+        private void OpenFileOrFolder()
         {
-            FileInfo fileInfo = new FileInfo(Element.Name);
-            Info = "Type: " + Path.GetExtension(Element.Name) + "\n";
-            Info += "Directory Name: " + fileInfo.DirectoryName + "\n";
-            Info += "Creation Time: " + fileInfo.CreationTime.ToString() + "\n";
-           
-            if (CheckFileOrFolder(Element.Name))
+            if (CheckFileOrFolder(Element.Path))
             {
-                Info += "Size: " + DirSize(new DirectoryInfo(Element.Name)) + " байт.\n";
-                Info += "Count Files: " + GetFilesCount(new DirectoryInfo(Element.Name)) + "\n";
+                SetFoldersAndFiles(Element.Path);
+            }
+        }
+
+        private async void OpenFileInfo()
+        {
+            if(Element == null)
+            {
                 return;
             }
 
-            Info += "Size: " + fileInfo.Length + " byte.\n";
+            Info = "Type: " + Path.GetExtension(Element.Path) + "\n";
 
+            if (!CheckFileOrFolder(Element.Path))
+            {
+                FileInfo fileInfo = new FileInfo(Element.Path);
+                Info += "Directory Name: " + fileInfo.DirectoryName + "\n";
+                Info += "Creation Time: " + fileInfo.CreationTime.ToString() + "\n";
+                Info += "Size: " + fileInfo.Length + " byte.\n";
+                return;
+            }
+            Info += "Size: " + await DirSize(new DirectoryInfo(Element.Path)) + " байт.\n";
+            Info += "Count Files: " + GetFilesCount(new DirectoryInfo(Element.Path)) + "\n";
         }
 
-        private long DirSize(DirectoryInfo d, long limit = 0)
+        private async Task<long> DirSize(DirectoryInfo d, long limit = 0)
         {
             try
             {
@@ -96,7 +109,7 @@ namespace FileManager.MVVM.ViewModels
                 DirectoryInfo[] dis = d.GetDirectories();
                 foreach (DirectoryInfo di in dis)
                 {
-                    Size += DirSize(di, limit);
+                    Size += await DirSize(di, limit);
                     if (limit > 0 && Size > limit)
                         return Size;
                 }

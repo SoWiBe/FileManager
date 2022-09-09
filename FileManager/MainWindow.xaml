@@ -19,6 +19,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        
         <ListBox
             Grid.Column="0"
             ItemsSource="{Binding ElementsOfDirectory}"
@@ -33,8 +34,8 @@
                     <i:InvokeCommandAction 
                         Command="{Binding OpenCommand}"/>
                 </i:EventTrigger>
-                
-                <i:EventTrigger EventName="">
+
+                <i:EventTrigger EventName="MouseDown">
                     <i:InvokeCommandAction 
                         Command="{Binding OpenMoreInfoCommand}"/>
                 </i:EventTrigger>
