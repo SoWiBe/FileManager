@@ -17,7 +17,7 @@ namespace FileManager.MVVM.ViewModels
     {
         //main collection folders and files
         public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
-        public ObservableCollection<IModel> SearchCollection { get; set; }
+        public List<IModel> sourceItems = new List<IModel>();
 
         //search text for writing in textbox and use this for check available element in collection
         private string _searchText;
@@ -31,6 +31,7 @@ namespace FileManager.MVVM.ViewModels
             {
                 _searchText = value;
                 OnPropertyChanged();
+                SearchFolderAndFiles();
             }
         }
 
@@ -61,8 +62,9 @@ namespace FileManager.MVVM.ViewModels
 
         public MainViewModel()
         {
-            ElementsOfDirectory = new ObservableCollection<IModel>();
+            SetFoldersAndFiles("C:\\");
 
+            ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
             MinimizeCommand = new RelayCommand(o => MinimizeWindow());
@@ -70,45 +72,66 @@ namespace FileManager.MVVM.ViewModels
             CloseCommand = new RelayCommand(o => CloseWindow());
 
             Info = "Just some click to file or folder)";
-
-            SetFoldersAndFiles("C:\\");
-            
         }
+
+        //search realization
+        private void SearchFolderAndFiles()
+        {
+            var searchItem = SearchText;
+
+            if (string.IsNullOrWhiteSpace(searchItem))
+            {
+                searchItem = string.Empty;
+            }
+
+            searchItem = searchItem.ToLowerInvariant();
+
+            var filteredItems = sourceItems.Where(value => value.Name.ToLowerInvariant().Contains(searchItem)).ToList();
+
+            if (string.IsNullOrWhiteSpace(searchItem))
+            {
+                filteredItems = sourceItems.ToList();
+            }
+
+            foreach (var value in sourceItems)
+            {
+                if (!filteredItems.Contains(value))
+                {
+                    ElementsOfDirectory.Remove(value);
+                }
+            }
+        }
+
 
         //show all folders and files
         private async Task<string> SetFoldersAndFiles(string path)
         {
-            ClearFoldersAndFiles();
             string[] files = Directory.GetFiles(path);
             string[] dirs = Directory.GetDirectories(path);
 
             for (int i = 0; i < dirs.Length; i++)
             {
-                ElementsOfDirectory.Add(new FolderModel() { Name = new DirectoryInfo(dirs[i]).Name, Path = dirs[i], Icon = "/Images/folder.png" });
+                sourceItems.Add(new FolderModel() { Name = new DirectoryInfo(dirs[i]).Name, Path = dirs[i], Icon = "/Images/folder.png" });
             }
 
             for (int i = 0; i < files.Length; i++)
             {
-                ElementsOfDirectory.Add(new FileModel() { Name = new FileInfo(files[i]).Name, Path = files[i], Icon = "/Images/files.png" });
+                sourceItems.Add(new FileModel() { Name = new FileInfo(files[i]).Name, Path = files[i], Icon = "/Images/files.png" });
             }
+            
             return "Success!";
-        }
-
-        private void ClearFoldersAndFiles()
-        {
-            ElementsOfDirectory.Clear();
         }
 
         private async void OpenFileOrFolder()
         {
             if (CheckFileOrFolder(Element.Path))
             {
+                ElementsOfDirectory.Clear();
                 await SetFoldersAndFiles(Element.Path);
                 return;
             }
             //write info about file in db
             await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() });
-
 
             System.Diagnostics.Process.Start(Element.Path);
         }
