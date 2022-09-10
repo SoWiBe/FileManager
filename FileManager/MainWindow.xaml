@@ -32,7 +32,7 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.ColumnSpan="2" Grid.Row="0"
-                Background="Green"
+                Background="#1B4079"
                 MouseDown="Border_MouseDown">
 
             <Grid HorizontalAlignment="Stretch"
@@ -81,7 +81,7 @@
             Width="150"
             Height="25"
             HorizontalAlignment="Left"
-            Grid.Row="1" Margin="8,8,0,8"
+            Grid.Row="1" Margin="18,8,0,8"
             />
 
         <Label
@@ -100,6 +100,7 @@
                 </Style>
             </Label.Style>
         </Label>
+        
         <ListBox
             Grid.Column="0"
             Grid.Row="2"

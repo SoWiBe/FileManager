@@ -9,7 +9,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
                     <Border CornerRadius="10"
-                            Background="LightGreen">
+                            Background="#CBDF90"
+                            BorderBrush="#8FAD88"
+                            BorderThickness="1">
                         <Grid>
 
                             <TextBox VerticalAlignment="Stretch"
@@ -20,7 +22,6 @@
                                      Background="Transparent"
                                      BorderThickness="0"
                                      Foreground="Black"
-                                     CaretBrush="Black"
                                      Margin="5 0 0 0"
                                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox.InputBindings>
@@ -33,7 +34,7 @@
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
                                        Margin="5 0 0 0"
-                                       Foreground="Gray">
+                                       Foreground="Black">
 
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
