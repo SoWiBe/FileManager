@@ -89,8 +89,7 @@
             Grid.Row="1"
             Content="Additional Information"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center" Height="34" Width="254"
-            >
+            VerticalAlignment="Center" Height="34" Width="254">
             <Label.Style>
                 <Style TargetType="Label">
                     <Setter Property="Foreground" Value="Black"/>
@@ -108,7 +107,6 @@
             BorderThickness="0"
             SelectedItem="{Binding Element}"
             Background="Transparent"
-            
             ItemContainerStyle="{StaticResource ListElement}" 
             Margin="10,10,10,7">
             <i:Interaction.Triggers>
@@ -121,27 +119,28 @@
             </i:Interaction.Triggers>
         </ListBox>
 
-        <TextBlock
+        <Border
             Grid.Column="1"
             Grid.Row="2"
-            Text="{Binding Info, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Foreground="Black"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Margin="10,10,0,0"
-            >
-            <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="FontFamily" Value="Montserrat"/>
-                    <Setter Property="FontSize" Value="11"/>
-                    <Setter Property="FontWeight" Value="Light"/>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
-
-
-
-
+            Margin="10"
+            BorderBrush="#1B4079"
+            BorderThickness="1"
+            CornerRadius="10">
+            <TextBlock 
+                    Text="{Binding Info, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Foreground="Black"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="10,10,0,0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontFamily" Value="Montserrat"/>
+                        <Setter Property="FontSize" Value="11"/>
+                        <Setter Property="FontWeight" Value="Light"/>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Border>
     </Grid>
 </Window>

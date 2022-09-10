@@ -63,8 +63,8 @@ namespace FileManager.MVVM.ViewModels
 
         public MainViewModel()
         {
-            SetFoldersAndFiles("C:\\");
-
+            //SetFoldersAndFiles("C:\\");
+            StartupConfiguration();
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
@@ -73,6 +73,13 @@ namespace FileManager.MVVM.ViewModels
             CloseCommand = new RelayCommand(o => CloseWindow());
 
             Info = "Just some click to file or folder)";
+        }
+
+        private void StartupConfiguration()
+        {
+            sourceItems.Add(new FolderModel() { Name = new DirectoryInfo("C:\\").Name, Path = "C:\\", Icon = "/Images/folder.png" });
+            sourceItems.Add(new FolderModel() { Name = new DirectoryInfo("D:\\").Name, Path = "D:\\", Icon = "/Images/folder.png" });
+            sourceItems.Add(new FolderModel() { Name = new DirectoryInfo("E:\\").Name, Path = "E:\\", Icon = "/Images/folder.png" });
         }
 
         //search realization
@@ -102,7 +109,6 @@ namespace FileManager.MVVM.ViewModels
             }
         }
 
-
         //show all folders and files
         private async Task<string> SetFoldersAndFiles(string path)
         {
@@ -126,7 +132,6 @@ namespace FileManager.MVVM.ViewModels
         {
             if (CheckFileOrFolder(Element.Path))
             {
-                ElementsOfDirectory.Clear();
                 await SetFoldersAndFiles(Element.Path);
                 return;
             }
@@ -136,10 +141,18 @@ namespace FileManager.MVVM.ViewModels
             System.Diagnostics.Process.Start(Element.Path);
         }
 
+        private void SetCollection(List<IModel> models)
+        {
+            foreach (var model in models)
+            {
+                ElementsOfDirectory.Add(model);
+            }
+        }
+
         //activating after one click on the listbox
         private async void OpenFileInfo()
         {
-            if(Element == null)
+            if (Element == null)
             {
                 return;
             }
@@ -163,7 +176,7 @@ namespace FileManager.MVVM.ViewModels
         }
 
         //caculating folder size
-        private async Task<long> DirSize(DirectoryInfo d, long limit = 0)
+        private async Task<long> DirSize(DirectoryInfo d, long limit = 100)
         {
             try
             {
