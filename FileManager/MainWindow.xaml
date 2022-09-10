@@ -54,7 +54,7 @@
                             BorderThickness="0"
                             Foreground="White"
                             FontWeight="Bold"
-                            Click="btnMinimize_Click"/>
+                            Command="{Binding MinimizeCommand}"/>
                     <Button Width="20" Height="20"
                             Content="☐"
                             x:Name="btnMaximize"
@@ -63,7 +63,7 @@
                             BorderThickness="0"
                             Foreground="White"
                             FontWeight="Bold"
-                            Click="btnMaximize_Click"/>
+                            Command="{Binding MaximizeCommand}"/>
                     <Button Width="20" Height="20"
                             Content="🗙"
                             x:Name="btnClose"
@@ -71,7 +71,7 @@
                             BorderThickness="0"
                             Foreground="White"
                             FontWeight="Bold"
-                            Click="btnClose_Click"/>
+                            Command="{Binding CloseCommand}"/>
                 </StackPanel>
             </Grid>
         </Border>
