@@ -31,7 +31,6 @@ namespace FileManager.MVVM.ViewModels
             {
                 _searchText = value;
                 OnPropertyChanged();
-                //SearchFolderAndFile();
             }
         }
 
@@ -54,6 +53,10 @@ namespace FileManager.MVVM.ViewModels
         public RelayCommand OpenMoreInfoCommand { get; set; }
         public RelayCommand SearchCommand { get; set; }
 
+        public RelayCommand MinimizeCommand { get; set; }
+        public RelayCommand MaximizeCommand { get; set; }
+        public RelayCommand CloseCommand { get; set; }
+        public RelayCommand DragMoveCommand { get; set; }
 
 
         public MainViewModel()
@@ -62,6 +65,10 @@ namespace FileManager.MVVM.ViewModels
 
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
+            MinimizeCommand = new RelayCommand(o => MinimizeWindow());
+            MaximizeCommand = new RelayCommand(o => MaximizeWindow());
+            CloseCommand = new RelayCommand(o => CloseWindow());
+
             Info = "Just some click to file or folder)";
 
             SetFoldersAndFiles("C:\\");
@@ -104,8 +111,6 @@ namespace FileManager.MVVM.ViewModels
 
 
             System.Diagnostics.Process.Start(Element.Path);
-
-
         }
 
         //activating after one click on the listbox
@@ -185,6 +190,25 @@ namespace FileManager.MVVM.ViewModels
                 return true;
             }
             return false;
+        }
+
+        //methods for upper panel
+        private void MinimizeWindow()
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeWindow()
+        {
+            if (Application.Current.MainWindow.WindowState != WindowState.Maximized)
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            else
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+        }
+
+        private void CloseWindow()
+        {
+            Application.Current.Shutdown();
         }
     }
 }

@@ -19,8 +19,8 @@
                                      TextWrapping="Wrap"
                                      Background="Transparent"
                                      BorderThickness="0"
-                                     Foreground="Gray"
-                                     CaretBrush="Gray"
+                                     Foreground="Black"
+                                     CaretBrush="Black"
                                      Margin="5 0 0 0"
                                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox.InputBindings>
