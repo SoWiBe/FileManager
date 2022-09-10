@@ -1,6 +1,6 @@
 # FileManager
 This FileManager was created for *Webtronics* how test task.
-![image](https://user-images.githubusercontent.com/68136994/189360325-70a84cf8-9764-4832-b13b-2b0705e1a44f.png)
+![image](https://user-images.githubusercontent.com/68136994/189480758-a739e3a7-0991-4b99-8c51-86e5050ae1df.png)
 
 
 
