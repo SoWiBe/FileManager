@@ -54,7 +54,7 @@
                             BorderThickness="0"
                             Foreground="White"
                             FontWeight="Bold"
-                            Click="btnMinimize_Click"/>
+                            Command="{Binding }"/>
                     <Button Width="20" Height="20"
                             Content="☐"
                             x:Name="btnMaximize"

@@ -26,13 +26,6 @@ namespace FileManager
             InitializeComponent();
         }
 
-        //Realization click to menu items
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-        protected void OnPropertyChanged(string property)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(property));
-        }
-
         //Move window by left button on the mouse
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
