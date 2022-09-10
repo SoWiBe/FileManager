@@ -15,8 +15,9 @@ namespace FileManager.MVVM.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
-        //main collection folders and files
+        //main update collection folders and files
         public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
+        //main collection for search, filtered, sorting and other
         public List<IModel> sourceItems = new List<IModel>();
 
         //search text for writing in textbox and use this for check available element in collection
@@ -98,6 +99,10 @@ namespace FileManager.MVVM.ViewModels
                 if (!filteredItems.Contains(value))
                 {
                     ElementsOfDirectory.Remove(value);
+                }
+                else if (!ElementsOfDirectory.Contains(value))
+                {
+                    ElementsOfDirectory.Add(value);
                 }
             }
         }
