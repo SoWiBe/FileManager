@@ -63,8 +63,8 @@ namespace FileManager.MVVM.ViewModels
 
         public MainViewModel()
         {
-            //SetFoldersAndFiles("C:\\");
-            StartupConfiguration();
+            SetFoldersAndFiles("C:\\");
+
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
@@ -125,6 +125,7 @@ namespace FileManager.MVVM.ViewModels
                 sourceItems.Add(new FileModel() { Name = new FileInfo(files[i]).Name, Path = files[i], Icon = "/Images/files.png" });
             }
             
+
             return "Success!";
         }
 
@@ -143,10 +144,18 @@ namespace FileManager.MVVM.ViewModels
 
         private void SetCollection(List<IModel> models)
         {
-            foreach (var model in models)
+            try
             {
-                ElementsOfDirectory.Add(model);
+                foreach (var model in models)
+                {
+                    ElementsOfDirectory.Add(model);
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         //activating after one click on the listbox
@@ -210,7 +219,7 @@ namespace FileManager.MVVM.ViewModels
         {
             try
             {
-                return d.GetFiles().Count();
+                return d.GetFiles().Count() + d.GetDirectories().Count();
             }
             catch(UnauthorizedAccessException ex)
             {
