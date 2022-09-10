@@ -89,11 +89,6 @@ namespace FileManager.MVVM.ViewModels
 
             var filteredItems = sourceItems.Where(value => value.Name.ToLowerInvariant().Contains(searchItem)).ToList();
 
-            if (string.IsNullOrWhiteSpace(searchItem))
-            {
-                filteredItems = sourceItems.ToList();
-            }
-
             foreach (var value in sourceItems)
             {
                 if (!filteredItems.Contains(value))
