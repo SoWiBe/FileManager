@@ -115,6 +115,8 @@ namespace FileManager.MVVM.ViewModels
             string[] files = Directory.GetFiles(path);
             string[] dirs = Directory.GetDirectories(path);
 
+            sourceItems.Clear();
+
             for (int i = 0; i < dirs.Length; i++)
             {
                 sourceItems.Add(new FolderModel() { Name = new DirectoryInfo(dirs[i]).Name, Path = dirs[i], Icon = "/Images/folder.png" });
@@ -124,8 +126,15 @@ namespace FileManager.MVVM.ViewModels
             {
                 sourceItems.Add(new FileModel() { Name = new FileInfo(files[i]).Name, Path = files[i], Icon = "/Images/files.png" });
             }
-            
 
+            if (ElementsOfDirectory != null)
+            {
+                ElementsOfDirectory.Clear();
+                foreach (var value in sourceItems)
+                {
+                    ElementsOfDirectory.Add(value);
+                }
+            }
             return "Success!";
         }
 
