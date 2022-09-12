@@ -20,6 +20,7 @@ namespace FileManager.MVVM.ViewModels
         //main collection for search, filtered, sorting and other
         public List<IModel> sourceItems = new List<IModel>();
 
+
         //search text for writing in textbox and use this for check available element in collection
         private string _searchText;
         public string SearchText
@@ -49,11 +50,29 @@ namespace FileManager.MVVM.ViewModels
         public IModel Element { get { return _selectedElement; } 
             set { _selectedElement = value; OnPropertyChanged(); OpenFileInfo(); } }
 
+        private string _currentPath;
+
+        private Visibility _backButtonState;
+        public Visibility BackButtonState
+        {
+            get
+            {
+                return _backButtonState;
+            }
+            set
+            {
+                _backButtonState = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private readonly string _startPath = "C:\\";
 
         //create commands for communication with buttons, doubleclicks and etc
         public RelayCommand OpenCommand { get; set; }
         public RelayCommand OpenMoreInfoCommand { get; set; }
         public RelayCommand SearchCommand { get; set; }
+        public RelayCommand ComeBackCommand { get; set; }
 
         public RelayCommand MinimizeCommand { get; set; }
         public RelayCommand MaximizeCommand { get; set; }
@@ -63,16 +82,20 @@ namespace FileManager.MVVM.ViewModels
 
         public MainViewModel()
         {
-            SetFoldersAndFiles("C:\\");
+            SetFoldersAndFiles(_startPath);
 
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
+            ComeBackCommand = new RelayCommand(o => ComeBackToThePastDirectory());
             MinimizeCommand = new RelayCommand(o => MinimizeWindow());
             MaximizeCommand = new RelayCommand(o => MaximizeWindow());
             CloseCommand = new RelayCommand(o => CloseWindow());
 
+            
             Info = "Just some click to file or folder)";
+
+            BackButtonState = Visibility.Hidden;
         }
 
         private void StartupConfiguration()
@@ -138,33 +161,34 @@ namespace FileManager.MVVM.ViewModels
             return "Success!";
         }
 
+        private async void ComeBackToThePastDirectory()
+        {
+            var pastPath = Directory.GetParent(_currentPath);
+
+            if (pastPath.FullName.Equals(_startPath))
+            {
+                BackButtonState = Visibility.Hidden;
+            }
+
+            await SetFoldersAndFiles(pastPath.FullName);
+
+            _currentPath = pastPath.FullName;
+        }
+
         private async void OpenFileOrFolder()
         {
             if (CheckFileOrFolder(Element.Path))
             {
+                BackButtonState = Visibility.Visible;
+                _currentPath = Element.Path;
                 await SetFoldersAndFiles(Element.Path);
                 return;
             }
+
             //write info about file in db
             await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() });
 
             System.Diagnostics.Process.Start(Element.Path);
-        }
-
-        private void SetCollection(List<IModel> models)
-        {
-            try
-            {
-                foreach (var model in models)
-                {
-                    ElementsOfDirectory.Add(model);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            
         }
 
         //activating after one click on the listbox
