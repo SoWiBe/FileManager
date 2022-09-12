@@ -81,7 +81,7 @@
                     Grid.Row="1">
             <Button Height="15"
                     Margin="10 0 0 0"
-                    Command="{Binding }">
+                    Command="{Binding ComeBackCommand}">
                 <Button.Template>
                     <ControlTemplate>
                         <Image 
