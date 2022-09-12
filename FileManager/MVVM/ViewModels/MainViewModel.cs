@@ -71,7 +71,7 @@ namespace FileManager.MVVM.ViewModels
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
-            ComeBackCommand = new RelayCommand(o => CloseWindow());
+            ComeBackCommand = new RelayCommand(o => ComeBackToThePastDirectory());
             MinimizeCommand = new RelayCommand(o => MinimizeWindow());
             MaximizeCommand = new RelayCommand(o => MaximizeWindow());
             CloseCommand = new RelayCommand(o => CloseWindow());
