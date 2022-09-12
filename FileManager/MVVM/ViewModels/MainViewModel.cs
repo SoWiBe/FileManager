@@ -151,22 +151,6 @@ namespace FileManager.MVVM.ViewModels
             System.Diagnostics.Process.Start(Element.Path);
         }
 
-        private void SetCollection(List<IModel> models)
-        {
-            try
-            {
-                foreach (var model in models)
-                {
-                    ElementsOfDirectory.Add(model);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            
-        }
-
         //activating after one click on the listbox
         private async void OpenFileInfo()
         {
