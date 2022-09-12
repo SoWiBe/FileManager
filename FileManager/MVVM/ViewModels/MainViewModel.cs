@@ -146,8 +146,10 @@ namespace FileManager.MVVM.ViewModels
         private async void ComeBackToThePastDirectory()
         {
             var pastPath = Directory.GetParent(_currentPath);
-            MessageBox.Show(pastPath.FullName);
+
             await SetFoldersAndFiles(pastPath.FullName);
+
+            _currentPath = pastPath.FullName;
         }
 
         private async void OpenFileOrFolder()
