@@ -52,6 +52,22 @@ namespace FileManager.MVVM.ViewModels
 
         private string _currentPath;
 
+        private Visibility _backButtonState;
+        public Visibility BackButtonState
+        {
+            get
+            {
+                return _backButtonState;
+            }
+            set
+            {
+                _backButtonState = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private readonly string _startPath = "C:\\";
+
         //create commands for communication with buttons, doubleclicks and etc
         public RelayCommand OpenCommand { get; set; }
         public RelayCommand OpenMoreInfoCommand { get; set; }
@@ -66,7 +82,7 @@ namespace FileManager.MVVM.ViewModels
 
         public MainViewModel()
         {
-            SetFoldersAndFiles("C:\\");
+            SetFoldersAndFiles(_startPath);
 
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
@@ -78,6 +94,8 @@ namespace FileManager.MVVM.ViewModels
 
             
             Info = "Just some click to file or folder)";
+
+            BackButtonState = Visibility.Hidden;
         }
 
         private void StartupConfiguration()
@@ -147,6 +165,11 @@ namespace FileManager.MVVM.ViewModels
         {
             var pastPath = Directory.GetParent(_currentPath);
 
+            if (pastPath.FullName.Equals(_startPath))
+            {
+                BackButtonState = Visibility.Hidden;
+            }
+
             await SetFoldersAndFiles(pastPath.FullName);
 
             _currentPath = pastPath.FullName;
@@ -156,10 +179,12 @@ namespace FileManager.MVVM.ViewModels
         {
             if (CheckFileOrFolder(Element.Path))
             {
+                BackButtonState = Visibility.Visible;
                 _currentPath = Element.Path;
                 await SetFoldersAndFiles(Element.Path);
                 return;
             }
+
             //write info about file in db
             await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() });
 
