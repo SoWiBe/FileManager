@@ -20,6 +20,7 @@ namespace FileManager.MVVM.ViewModels
         //main collection for search, filtered, sorting and other
         public List<IModel> sourceItems = new List<IModel>();
 
+
         //search text for writing in textbox and use this for check available element in collection
         private string _searchText;
         public string SearchText
@@ -49,11 +50,13 @@ namespace FileManager.MVVM.ViewModels
         public IModel Element { get { return _selectedElement; } 
             set { _selectedElement = value; OnPropertyChanged(); OpenFileInfo(); } }
 
+        private string _currentPath;
 
         //create commands for communication with buttons, doubleclicks and etc
         public RelayCommand OpenCommand { get; set; }
         public RelayCommand OpenMoreInfoCommand { get; set; }
         public RelayCommand SearchCommand { get; set; }
+        public RelayCommand ComeBackCommand { get; set; }
 
         public RelayCommand MinimizeCommand { get; set; }
         public RelayCommand MaximizeCommand { get; set; }
@@ -68,10 +71,12 @@ namespace FileManager.MVVM.ViewModels
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
             OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
+            ComeBackCommand = new RelayCommand(o => CloseWindow());
             MinimizeCommand = new RelayCommand(o => MinimizeWindow());
             MaximizeCommand = new RelayCommand(o => MaximizeWindow());
             CloseCommand = new RelayCommand(o => CloseWindow());
 
+            
             Info = "Just some click to file or folder)";
         }
 
@@ -138,10 +143,18 @@ namespace FileManager.MVVM.ViewModels
             return "Success!";
         }
 
+        private async void ComeBackToThePastDirectory()
+        {
+            string pastPath = ".." + _currentPath;
+            MessageBox.Show(pastPath);
+            await SetFoldersAndFiles(pastPath);
+        }
+
         private async void OpenFileOrFolder()
         {
             if (CheckFileOrFolder(Element.Path))
             {
+                _currentPath = Element.Path;
                 await SetFoldersAndFiles(Element.Path);
                 return;
             }
