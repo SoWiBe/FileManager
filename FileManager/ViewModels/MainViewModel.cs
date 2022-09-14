@@ -280,40 +280,8 @@ namespace FileManager.ViewModels
             }
             //write folder info
             Info += "Type: Folder\n";
-            Info += "Size: " + await DirSize(new DirectoryInfo(Element.Path)) + " байт.\n";
+            Info += "Size: " + await FileService.DirSize(new DirectoryInfo(Element.Path)) + " байт.\n";
             Info += "Count Files: " + FileService.GetFilesCount(new DirectoryInfo(Element.Path)) + "\n";
         }
-
-        //caculating folder size
-        private async Task<long> DirSize(DirectoryInfo d, long limit = 100)
-        {
-            try
-            {
-                // Add file sizes.
-                long Size = 0;
-                FileInfo[] fis = d.GetFiles();
-                foreach (FileInfo fi in fis)
-                {
-                    Size += fi.Length;
-                    if (limit > 0 && Size > limit)
-                        return Size;
-                }
-                // Add subdirectory sizes.
-                DirectoryInfo[] dis = d.GetDirectories();
-                foreach (DirectoryInfo di in dis)
-                {
-                    Size += await DirSize(di, limit);
-                    if (limit > 0 && Size > limit)
-                        return Size;
-                }
-                return (Size);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return 0;
-            }
-            
-        }
-
     }
 }

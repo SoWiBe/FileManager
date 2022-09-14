@@ -40,5 +40,35 @@ namespace FileManager.ViewModels.Services
                 return false;
             }
         }
+
+        public static async Task<long> DirSize(DirectoryInfo d, long limit = 100)
+        {
+            try
+            {
+                // Add file sizes.
+                long Size = 0;
+                FileInfo[] fis = d.GetFiles();
+                foreach (FileInfo fi in fis)
+                {
+                    Size += fi.Length;
+                    if (limit > 0 && Size > limit)
+                        return Size;
+                }
+                // Add subdirectory sizes.
+                DirectoryInfo[] dis = d.GetDirectories();
+                foreach (DirectoryInfo di in dis)
+                {
+                    Size += await DirSize(di, limit);
+                    if (limit > 0 && Size > limit)
+                        return Size;
+                }
+                return (Size);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return 0;
+            }
+
+        }
     }
 }
