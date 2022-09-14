@@ -157,7 +157,7 @@ namespace FileManager.ViewModels
 
             foreach (var item in drives)
             {
-                sourceItems.Add(new FolderModel() { Name = new DirectoryInfo(item.Name).Name, Path = item.Name, Icon = "/Images/folder.png" });
+                sourceItems.Add(new DriveModel() { Name = new DirectoryInfo(item.Name).Name, Path = item.Name, Icon = "/Images/drive.png" });
             }
 
             if (ElementsOfDirectory != null)
