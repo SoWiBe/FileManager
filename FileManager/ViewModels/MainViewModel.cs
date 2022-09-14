@@ -1,5 +1,5 @@
 ﻿using FileManager.Core;
-using FileManager.MVVM.Models;
+using FileManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +11,7 @@ using System.Windows;
 using System.Diagnostics;
 using FileManager.DB;
 
-namespace FileManager.MVVM.ViewModels
+namespace FileManager.ViewModels
 {
     public class MainViewModel : ObservableObject
     {

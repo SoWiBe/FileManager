@@ -1,10 +1,10 @@
-﻿<Window x:Class="FileManager.MainWindow"
+﻿<Window x:Class="FileManager.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileManager" 
-        xmlns:viewmodel="clr-namespace:FileManager.MVVM.ViewModels"
+        xmlns:viewmodel="clr-namespace:FileManager.ViewModels"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="FileManager"
@@ -18,7 +18,6 @@
     <Window.DataContext>
         <viewmodel:MainViewModel/>
     </Window.DataContext>
-
 
     <Grid>
         <Grid.RowDefinitions>

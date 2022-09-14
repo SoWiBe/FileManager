@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace FileManager.MVVM.Models
+namespace FileManager.Models
 {
     public class FileModel : IModel
     {
