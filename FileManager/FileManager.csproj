@@ -180,7 +180,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FilesModel.edmx</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -190,7 +190,15 @@
     </Compile>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="ViewModels\Commands\CloseCommand.cs" />
+    <Compile Include="ViewModels\Commands\ComeBackCommand.cs" />
+    <Compile Include="ViewModels\Commands\DragMoveCommand.cs" />
+    <Compile Include="ViewModels\Commands\MaximizeCommand.cs" />
+    <Compile Include="ViewModels\Commands\MinimizeCommand.cs" />
+    <Compile Include="ViewModels\Commands\OpenCommand.cs" />
+    <Compile Include="ViewModels\Commands\OpenMoreInfoCommand.cs" />
+    <Compile Include="ViewModels\Commands\SearchCommand.cs" />
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -266,10 +274,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\Commands\" />
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

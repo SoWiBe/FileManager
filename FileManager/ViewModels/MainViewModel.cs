@@ -1,5 +1,5 @@
 ﻿using FileManager.Core;
-using FileManager.MVVM.Models;
+using FileManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,8 +10,9 @@ using System.IO;
 using System.Windows;
 using System.Diagnostics;
 using FileManager.DB;
+using FileManager.ViewModels.Commands;
 
-namespace FileManager.MVVM.ViewModels
+namespace FileManager.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
@@ -66,32 +67,96 @@ namespace FileManager.MVVM.ViewModels
             }
         }
 
-        private readonly string _startPath = "C:\\";
+        private List<DriveInfo> drives;
 
         //create commands for communication with buttons, doubleclicks and etc
-        public RelayCommand OpenCommand { get; set; }
-        public RelayCommand OpenMoreInfoCommand { get; set; }
-        public RelayCommand SearchCommand { get; set; }
-        public RelayCommand ComeBackCommand { get; set; }
+        private OpenCommand _openCommand;
+        public OpenCommand OpenCommand
+        {
+            get
+            {
+                if(_openCommand == null)
+                {
+                    _openCommand = new OpenCommand(OpenFileOrFolder);
+                }
+                return _openCommand;
+            }
+        }
 
-        public RelayCommand MinimizeCommand { get; set; }
-        public RelayCommand MaximizeCommand { get; set; }
-        public RelayCommand CloseCommand { get; set; }
+        private SearchCommand _searchCommand;
+        public SearchCommand SearchCommand
+        {
+            get
+            {
+                if(_searchCommand == null)
+                {
+                    _searchCommand = new SearchCommand(SearchFolderAndFiles);
+                }
+                return _searchCommand;
+            }
+        }
+
+        private ComeBackCommand _comeBackCommand;
+        public ComeBackCommand ComeBackCommand
+        {
+            get
+            {
+                if(_comeBackCommand == null)
+                {
+                    _comeBackCommand = new ComeBackCommand(ComeBackToThePastDirectory);
+                }
+                return _comeBackCommand;
+            }
+        }
+
+        private CloseCommand _closeCommand;
+        public CloseCommand CloseCommand
+        {
+            get
+            {
+                if(_closeCommand == null)
+                {
+                    _closeCommand = new CloseCommand(CloseWindow);
+                }
+                return _closeCommand;
+            }
+        }
+
+        private MinimizeCommand _minimizeCommand;
+        public MinimizeCommand MinimizeCommand
+        {
+            get
+            {
+                if(_minimizeCommand == null)
+                {
+                    _minimizeCommand = new MinimizeCommand(MinimizeWindow);
+                }
+                return _minimizeCommand;
+            }
+        }
+
+        private MaximizeCommand _maximizeCommand;
+        public MaximizeCommand MaximizeCommand
+        {
+            get
+            {
+                if (_maximizeCommand == null)
+                {
+                    _maximizeCommand = new MaximizeCommand(MaximizeWindow);
+                }
+                return _maximizeCommand;
+            }
+        }
+
         public RelayCommand DragMoveCommand { get; set; }
 
 
         public MainViewModel()
         {
-            SetFoldersAndFiles(_startPath);
+            drives = DriveInfo.GetDrives().ToList();
+            StartupConfiguration();
 
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
-            OpenCommand = new RelayCommand(o => OpenFileOrFolder());
-            OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
-            ComeBackCommand = new RelayCommand(o => ComeBackToThePastDirectory());
-            MinimizeCommand = new RelayCommand(o => MinimizeWindow());
-            MaximizeCommand = new RelayCommand(o => MaximizeWindow());
-            CloseCommand = new RelayCommand(o => CloseWindow());
-
             
             Info = "Just some click to file or folder)";
 
@@ -100,9 +165,21 @@ namespace FileManager.MVVM.ViewModels
 
         private void StartupConfiguration()
         {
-            sourceItems.Add(new FolderModel() { Name = new DirectoryInfo("C:\\").Name, Path = "C:\\", Icon = "/Images/folder.png" });
-            sourceItems.Add(new FolderModel() { Name = new DirectoryInfo("D:\\").Name, Path = "D:\\", Icon = "/Images/folder.png" });
-            sourceItems.Add(new FolderModel() { Name = new DirectoryInfo("E:\\").Name, Path = "E:\\", Icon = "/Images/folder.png" });
+            sourceItems.Clear();
+
+            foreach (var item in drives)
+            {
+                sourceItems.Add(new FolderModel() { Name = new DirectoryInfo(item.Name).Name, Path = item.Name, Icon = "/Images/folder.png" });
+            }
+
+            if (ElementsOfDirectory != null)
+            {
+                ElementsOfDirectory.Clear();
+                foreach (var value in sourceItems)
+                {
+                    ElementsOfDirectory.Add(value);
+                }
+            }
         }
 
         //search realization
@@ -163,19 +240,21 @@ namespace FileManager.MVVM.ViewModels
 
         private async void ComeBackToThePastDirectory()
         {
-            var pastPath = Directory.GetParent(_currentPath);
-
-            if (pastPath.FullName.Equals(_startPath))
+            if (drives.Any(item => item.Name.Equals(_currentPath)))
             {
                 BackButtonState = Visibility.Hidden;
+                StartupConfiguration();
+                return;
             }
+
+            var pastPath = Directory.GetParent(_currentPath);
 
             await SetFoldersAndFiles(pastPath.FullName);
 
             _currentPath = pastPath.FullName;
         }
 
-        private async void OpenFileOrFolder()
+        public async void OpenFileOrFolder()
         {
             if (CheckFileOrFolder(Element.Path))
             {
@@ -262,12 +341,20 @@ namespace FileManager.MVVM.ViewModels
 
         private bool CheckFileOrFolder(string path)
         {
-            FileAttributes attr = File.GetAttributes(path);
-            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+            try
             {
-                return true;
+                FileAttributes attr = File.GetAttributes(path);
+                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                {
+                    return true;
+                }
+                return false;
+            } 
+            catch(IOException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
             }
-            return false;
         }
 
         //methods for upper panel

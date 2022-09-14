@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FileManager
+namespace FileManager.View
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
