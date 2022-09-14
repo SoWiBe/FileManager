@@ -261,7 +261,7 @@ namespace FileManager.ViewModels
         //activating after one click on the listbox
         private async void OpenFileInfo()
         {
-            if (Element == null)
+            if (Element == null || drives.Any(drive => drive.Name.Equals(Element.Name)))
             {
                 return;
             }

@@ -10,10 +10,7 @@ namespace FileManager.Models
     public class FolderModel : IModel
     {
         public string Name { get; set; }
-        public string Size { get; set; }
-        public int CountOfFiles { get; set; }
         public string Path { get; set; }
         public string Icon { get; set; }
-        public Brush Color { get; set; }
     }
 }

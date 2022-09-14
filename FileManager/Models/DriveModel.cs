@@ -7,10 +7,10 @@ using System.Windows.Media;
 
 namespace FileManager.Models
 {
-    public class FileModel : IModel
+    public class DriveModel : IModel
     {
-        public string Name { get; set; }
         public string Path { get; set; }
+        public string Name { get; set; }
         public string Icon { get; set; }
     }
 }
