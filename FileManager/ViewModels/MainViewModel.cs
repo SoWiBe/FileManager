@@ -10,6 +10,7 @@ using System.IO;
 using System.Windows;
 using System.Diagnostics;
 using FileManager.DB;
+using FileManager.ViewModels.Commands;
 
 namespace FileManager.ViewModels
 {
@@ -69,7 +70,18 @@ namespace FileManager.ViewModels
         private readonly string _startPath = "C:\\";
 
         //create commands for communication with buttons, doubleclicks and etc
-        public RelayCommand OpenCommand { get; set; }
+        private OpenCommand _openCommand;
+        public OpenCommand OpenCommand
+        {
+            get
+            {
+                if(_openCommand == null)
+                {
+                    _openCommand = new OpenCommand(OpenFileOrFolder);
+                }
+                return _openCommand;
+            }
+        }
         public RelayCommand OpenMoreInfoCommand { get; set; }
         public RelayCommand SearchCommand { get; set; }
         public RelayCommand ComeBackCommand { get; set; }
@@ -85,7 +97,9 @@ namespace FileManager.ViewModels
             SetFoldersAndFiles(_startPath);
 
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
-            OpenCommand = new RelayCommand(o => OpenFileOrFolder());
+
+
+            //OpenCommand = new RelayCommand(o => OpenFileOrFolder());
             OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
             ComeBackCommand = new RelayCommand(o => ComeBackToThePastDirectory());
             MinimizeCommand = new RelayCommand(o => MinimizeWindow());
@@ -175,7 +189,7 @@ namespace FileManager.ViewModels
             _currentPath = pastPath.FullName;
         }
 
-        private async void OpenFileOrFolder()
+        public async void OpenFileOrFolder()
         {
             if (CheckFileOrFolder(Element.Path))
             {
