@@ -70,79 +70,79 @@ namespace FileManager.ViewModels
         private List<DriveInfo> drives;
 
         //create commands for communication with buttons, doubleclicks and etc
-        private OpenCommand _openCommand;
-        public OpenCommand OpenCommand
+        private RelayCommand _openCommand;
+        public RelayCommand OpenCommand
         {
             get
             {
                 if(_openCommand == null)
                 {
-                    _openCommand = new OpenCommand(OpenFileOrFolder);
+                    _openCommand = new RelayCommand(o => OpenFileOrFolder());
                 }
                 return _openCommand;
             }
         }
 
-        private SearchCommand _searchCommand;
-        public SearchCommand SearchCommand
+        private RelayCommand _searchCommand;
+        public RelayCommand SearchCommand
         {
             get
             {
                 if(_searchCommand == null)
                 {
-                    _searchCommand = new SearchCommand(SearchFolderAndFiles);
+                    _searchCommand = new RelayCommand(o => SearchFolderAndFiles());
                 }
                 return _searchCommand;
             }
         }
 
-        private ComeBackCommand _comeBackCommand;
-        public ComeBackCommand ComeBackCommand
+        private RelayCommand _comeBackCommand;
+        public RelayCommand ComeBackCommand
         {
             get
             {
                 if(_comeBackCommand == null)
                 {
-                    _comeBackCommand = new ComeBackCommand(ComeBackToThePastDirectory);
+                    _comeBackCommand = new RelayCommand(o => ComeBackToThePastDirectory());
                 }
                 return _comeBackCommand;
             }
         }
 
-        private CloseCommand _closeCommand;
-        public CloseCommand CloseCommand
+        private RelayCommand _closeCommand;
+        public RelayCommand CloseCommand
         {
             get
             {
                 if(_closeCommand == null)
                 {
-                    _closeCommand = new CloseCommand(CloseWindow);
+                    _closeCommand = new RelayCommand(o => CloseWindow());
                 }
                 return _closeCommand;
             }
         }
 
-        private MinimizeCommand _minimizeCommand;
-        public MinimizeCommand MinimizeCommand
+        private RelayCommand _minimizeCommand;
+        public RelayCommand MinimizeCommand
         {
             get
             {
                 if(_minimizeCommand == null)
                 {
-                    _minimizeCommand = new MinimizeCommand(MinimizeWindow);
+                    _minimizeCommand = new RelayCommand(o => MinimizeWindow());
                 }
                 return _minimizeCommand;
             }
         }
 
-        private MaximizeCommand _maximizeCommand;
-        public MaximizeCommand MaximizeCommand
+        private RelayCommand _maximizeCommand;
+        public RelayCommand MaximizeCommand
         {
             get
             {
                 if (_maximizeCommand == null)
                 {
-                    _maximizeCommand = new MaximizeCommand(MaximizeWindow);
+                    _maximizeCommand = new RelayCommand(o => MaximizeWindow());
                 }
                 return _maximizeCommand;
             }
@@ -154,6 +154,7 @@ namespace FileManager.ViewModels
         public MainViewModel()
         {
             drives = DriveInfo.GetDrives().ToList();
+
             StartupConfiguration();
 
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);

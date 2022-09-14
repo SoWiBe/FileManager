@@ -189,15 +189,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\ObservableObject.cs" />
-    <Compile Include="Core\RelayCommand.cs" />
-    <Compile Include="ViewModels\Commands\CloseCommand.cs" />
-    <Compile Include="ViewModels\Commands\ComeBackCommand.cs" />
-    <Compile Include="ViewModels\Commands\DragMoveCommand.cs" />
-    <Compile Include="ViewModels\Commands\MaximizeCommand.cs" />
-    <Compile Include="ViewModels\Commands\MinimizeCommand.cs" />
-    <Compile Include="ViewModels\Commands\OpenCommand.cs" />
-    <Compile Include="ViewModels\Commands\OpenMoreInfoCommand.cs" />
-    <Compile Include="ViewModels\Commands\SearchCommand.cs" />
+    <Compile Include="ViewModels\Commands\RelayCommand.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
