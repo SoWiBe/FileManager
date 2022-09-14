@@ -204,10 +204,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MVVM\Models\FileModel.cs" />
-    <Compile Include="MVVM\Models\FolderModel.cs" />
-    <Compile Include="MVVM\Models\IModel.cs" />
-    <Compile Include="MVVM\ViewModels\MainViewModel.cs" />
+    <Compile Include="Models\FileModel.cs" />
+    <Compile Include="Models\FolderModel.cs" />
+    <Compile Include="Models\IModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -265,6 +265,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\Commands\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" />
