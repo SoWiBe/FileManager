@@ -32,7 +32,7 @@
 
         <Border Grid.ColumnSpan="2" Grid.Row="0"
                 Background="#1B4079"
-                MouseDown="{Binding}">
+                MouseDown="Border_MouseDown">
 
             <Grid HorizontalAlignment="Stretch"
                   Margin="18 0 10 0">

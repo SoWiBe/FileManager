@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace FileManager.ViewModels.Managering
+namespace FileManager.ViewModels.Services
 {
-    public static class FileHelper
+    public static class FileService
     {
 
         public static int GetFilesCount(DirectoryInfo d)

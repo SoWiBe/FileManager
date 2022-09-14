@@ -12,7 +12,7 @@ using System.Diagnostics;
 using FileManager.DB;
 using FileManager.ViewModels.Commands;
 using System.Windows.Input;
-using FileManager.ViewModels.Managering;
+using FileManager.ViewModels.Services;
 
 namespace FileManager.ViewModels
 {
@@ -116,7 +116,7 @@ namespace FileManager.ViewModels
         {
             get
             {
-                return _closeCommand ?? (_closeCommand = new RelayCommand(o => CloseWindow()));
+                return _closeCommand ?? (_closeCommand = new RelayCommand(o => WindowService.CloseWindow()));
             }
         }
 
@@ -125,7 +125,7 @@ namespace FileManager.ViewModels
         {
             get
             {
-                return _minimizeCommand ?? (_minimizeCommand = new RelayCommand(o => MinimizeWindow()));
+                return _minimizeCommand ?? (_minimizeCommand = new RelayCommand(o => WindowService.MinimizeWindow()));
             }
         }
 
@@ -134,7 +134,7 @@ namespace FileManager.ViewModels
         {
             get
             {
-                return _maximizeCommand ?? (_maximizeCommand = new RelayCommand(o => MaximizeWindow()));
+                return _maximizeCommand ?? (_maximizeCommand = new RelayCommand(o => WindowService.MaximizeWindow()));
             }
         }
 
@@ -244,7 +244,7 @@ namespace FileManager.ViewModels
 
         public async void OpenFileOrFolder()
         {
-            if (FileHelper.CheckFileOrFolder(Element.Path))
+            if (FileService.CheckFileOrFolder(Element.Path))
             {
                 BackButtonState = Visibility.Visible;
                 _currentPath = Element.Path;
@@ -269,7 +269,7 @@ namespace FileManager.ViewModels
             Info = "Name: " + Element.Name + "\n";
             
             //check our selected element folder or file
-            if (!FileHelper.CheckFileOrFolder(Element.Path))
+            if (!FileService.CheckFileOrFolder(Element.Path))
             {
                 //write file info
                 FileInfo fileInfo = new FileInfo(Element.Path);
@@ -281,7 +281,7 @@ namespace FileManager.ViewModels
             //write folder info
             Info += "Type: Folder\n";
             Info += "Size: " + await DirSize(new DirectoryInfo(Element.Path)) + " байт.\n";
-            Info += "Count Files: " + FileHelper.GetFilesCount(new DirectoryInfo(Element.Path)) + "\n";
+            Info += "Count Files: " + FileService.GetFilesCount(new DirectoryInfo(Element.Path)) + "\n";
         }
 
         //caculating folder size
@@ -315,24 +315,5 @@ namespace FileManager.ViewModels
             
         }
 
-
-        //methods for upper panel
-        private void MinimizeWindow()
-        {
-            Application.Current.MainWindow.WindowState = WindowState.Minimized;
-        }
-
-        private void MaximizeWindow()
-        {
-            if (Application.Current.MainWindow.WindowState != WindowState.Maximized)
-                Application.Current.MainWindow.WindowState = WindowState.Maximized;
-            else
-                Application.Current.MainWindow.WindowState = WindowState.Normal;
-        }
-
-        private void CloseWindow()
-        {
-            Application.Current.Shutdown();
-        }
     }
 }

@@ -190,7 +190,8 @@
     </Compile>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="ViewModels\Commands\RelayCommand.cs" />
-    <Compile Include="ViewModels\Managering\FileHelper.cs" />
+    <Compile Include="ViewModels\Services\FileService.cs" />
+    <Compile Include="ViewModels\Services\WindowService.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
