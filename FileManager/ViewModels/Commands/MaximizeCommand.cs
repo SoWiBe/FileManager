@@ -36,3 +36,4 @@ namespace FileManager.ViewModels.Commands
             execute.Invoke();
         }
     }
+}

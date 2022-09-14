@@ -84,7 +84,6 @@ namespace FileManager.ViewModels
         }
 
         private SearchCommand _searchCommand;
-
         public SearchCommand SearchCommand
         {
             get
@@ -94,6 +93,19 @@ namespace FileManager.ViewModels
                     _searchCommand = new SearchCommand(SearchFolderAndFiles);
                 }
                 return _searchCommand;
+            }
+        }
+
+        private ComeBackCommand _comeBackCommand;
+        public ComeBackCommand ComeBackCommand
+        {
+            get
+            {
+                if(_comeBackCommand == null)
+                {
+                    _comeBackCommand = new ComeBackCommand(ComeBackToThePastDirectory);
+                }
+                return _comeBackCommand;
             }
         }
 
@@ -109,11 +121,33 @@ namespace FileManager.ViewModels
                 return _closeCommand;
             }
         }
-       
-        public RelayCommand ComeBackCommand { get; set; }
 
-        public RelayCommand MinimizeCommand { get; set; }
-        public RelayCommand MaximizeCommand { get; set; }
+        private MinimizeCommand _minimizeCommand;
+        public MinimizeCommand MinimizeCommand
+        {
+            get
+            {
+                if(_minimizeCommand == null)
+                {
+                    _minimizeCommand = new MinimizeCommand(MinimizeWindow);
+                }
+                return _minimizeCommand;
+            }
+        }
+
+        private MaximizeCommand _maximizeCommand;
+        public MaximizeCommand MaximizeCommand
+        {
+            get
+            {
+                if (_maximizeCommand == null)
+                {
+                    _maximizeCommand = new MaximizeCommand(MaximizeWindow);
+                }
+                return _maximizeCommand;
+            }
+        }
+
         public RelayCommand DragMoveCommand { get; set; }
 
 
@@ -122,13 +156,6 @@ namespace FileManager.ViewModels
             SetFoldersAndFiles(_startPath);
 
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
-
-
-            //OpenCommand = new RelayCommand(o => OpenFileOrFolder());
-            ComeBackCommand = new RelayCommand(o => ComeBackToThePastDirectory());
-            MinimizeCommand = new RelayCommand(o => MinimizeWindow());
-            MaximizeCommand = new RelayCommand(o => MaximizeWindow());
-
             
             Info = "Just some click to file or folder)";
 
