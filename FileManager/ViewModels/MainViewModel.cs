@@ -82,13 +82,38 @@ namespace FileManager.ViewModels
                 return _openCommand;
             }
         }
-        public RelayCommand OpenMoreInfoCommand { get; set; }
-        public RelayCommand SearchCommand { get; set; }
+
+        private SearchCommand _searchCommand;
+
+        public SearchCommand SearchCommand
+        {
+            get
+            {
+                if(_searchCommand == null)
+                {
+                    _searchCommand = new SearchCommand(SearchFolderAndFiles);
+                }
+                return _searchCommand;
+            }
+        }
+
+        private CloseCommand _closeCommand;
+        public CloseCommand CloseCommand
+        {
+            get
+            {
+                if(_closeCommand == null)
+                {
+                    _closeCommand = new CloseCommand(CloseWindow);
+                }
+                return _closeCommand;
+            }
+        }
+       
         public RelayCommand ComeBackCommand { get; set; }
 
         public RelayCommand MinimizeCommand { get; set; }
         public RelayCommand MaximizeCommand { get; set; }
-        public RelayCommand CloseCommand { get; set; }
         public RelayCommand DragMoveCommand { get; set; }
 
 
@@ -100,11 +125,9 @@ namespace FileManager.ViewModels
 
 
             //OpenCommand = new RelayCommand(o => OpenFileOrFolder());
-            OpenMoreInfoCommand = new RelayCommand(o => OpenFileInfo());
             ComeBackCommand = new RelayCommand(o => ComeBackToThePastDirectory());
             MinimizeCommand = new RelayCommand(o => MinimizeWindow());
             MaximizeCommand = new RelayCommand(o => MaximizeWindow());
-            CloseCommand = new RelayCommand(o => CloseWindow());
 
             
             Info = "Just some click to file or folder)";

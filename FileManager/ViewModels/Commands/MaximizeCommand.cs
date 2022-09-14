@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace FileManager.ViewModels.Commands
 {
-    public class OpenCommand : ICommand
+    public class MaximizeCommand : ICommand
     {
         private Action execute;
         private Func<object, bool> canExecute;
@@ -18,7 +18,7 @@ namespace FileManager.ViewModels.Commands
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public OpenCommand(Action execute, Func<object, bool> canExecute = null)
+        public MaximizeCommand(Action execute, Func<object, bool> canExecute = null)
         {
             if (execute == null) throw new ArgumentException("exception");
 
@@ -36,4 +36,3 @@ namespace FileManager.ViewModels.Commands
             execute.Invoke();
         }
     }
-}
