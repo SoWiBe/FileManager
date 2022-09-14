@@ -7,9 +7,9 @@ using System.Windows.Input;
 
 namespace FileManager.ViewModels.Commands
 {
-    public class ComeBackCommand : ICommand
+    public class RelayCommand : ICommand
     {
-        private Action execute;
+        private Action<object> execute;
         private Func<object, bool> canExecute;
 
         public event EventHandler CanExecuteChanged
@@ -18,7 +18,7 @@ namespace FileManager.ViewModels.Commands
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public ComeBackCommand(Action execute, Func<object, bool> canExecute = null)
+        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
             if (execute == null) throw new ArgumentException("exception");
 
@@ -33,7 +33,7 @@ namespace FileManager.ViewModels.Commands
 
         public void Execute(object parameter)
         {
-            execute.Invoke();
+            this.execute(parameter ?? "<N/A>");
         }
     }
 }

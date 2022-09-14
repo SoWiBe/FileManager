@@ -11,6 +11,8 @@ using System.Windows;
 using System.Diagnostics;
 using FileManager.DB;
 using FileManager.ViewModels.Commands;
+using System.Windows.Input;
+using FileManager.ViewModels.Services;
 
 namespace FileManager.ViewModels
 {
@@ -20,7 +22,8 @@ namespace FileManager.ViewModels
         public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
         //main collection for search, filtered, sorting and other
         public List<IModel> sourceItems = new List<IModel>();
-
+        //collection for start
+        private List<DriveInfo> drives;
 
         //search text for writing in textbox and use this for check available element in collection
         private string _searchText;
@@ -48,8 +51,19 @@ namespace FileManager.ViewModels
 
         //selected model for click on the listbox
         public IModel _selectedElement;
-        public IModel Element { get { return _selectedElement; } 
-            set { _selectedElement = value; OnPropertyChanged(); OpenFileInfo(); } }
+        public IModel Element
+        {
+            get
+            {
+                return _selectedElement;
+            }
+            set
+            {
+                _selectedElement = value;
+                OnPropertyChanged(); 
+                OpenFileInfo();
+            }
+        }
 
         private string _currentPath;
 
@@ -67,93 +81,67 @@ namespace FileManager.ViewModels
             }
         }
 
-        private List<DriveInfo> drives;
+        
 
         //create commands for communication with buttons, doubleclicks and etc
-        private OpenCommand _openCommand;
-        public OpenCommand OpenCommand
+        private RelayCommand _openCommand;
+        public RelayCommand OpenCommand
         {
             get
             {
-                if(_openCommand == null)
-                {
-                    _openCommand = new OpenCommand(OpenFileOrFolder);
-                }
-                return _openCommand;
+                return _openCommand ?? (_openCommand = new RelayCommand(o => OpenFileOrFolder()));
             }
         }
 
-        private SearchCommand _searchCommand;
-        public SearchCommand SearchCommand
+        private RelayCommand _searchCommand;
+        public RelayCommand SearchCommand
         {
             get
             {
-                if(_searchCommand == null)
-                {
-                    _searchCommand = new SearchCommand(SearchFolderAndFiles);
-                }
-                return _searchCommand;
+                return _searchCommand ?? (_searchCommand = new RelayCommand(o => SearchFolderAndFiles()));
             }
         }
 
-        private ComeBackCommand _comeBackCommand;
-        public ComeBackCommand ComeBackCommand
+        private RelayCommand _comeBackCommand;
+        public RelayCommand ComeBackCommand
         {
             get
             {
-                if(_comeBackCommand == null)
-                {
-                    _comeBackCommand = new ComeBackCommand(ComeBackToThePastDirectory);
-                }
-                return _comeBackCommand;
+                return _comeBackCommand ?? (_comeBackCommand = new RelayCommand(o => ComeBackToThePastDirectory()));
             }
         }
 
-        private CloseCommand _closeCommand;
-        public CloseCommand CloseCommand
+        private RelayCommand _closeCommand;
+        public RelayCommand CloseCommand
         {
             get
             {
-                if(_closeCommand == null)
-                {
-                    _closeCommand = new CloseCommand(CloseWindow);
-                }
-                return _closeCommand;
+                return _closeCommand ?? (_closeCommand = new RelayCommand(o => WindowService.CloseWindow()));
             }
         }
 
-        private MinimizeCommand _minimizeCommand;
-        public MinimizeCommand MinimizeCommand
+        private RelayCommand _minimizeCommand;
+        public RelayCommand MinimizeCommand
         {
             get
             {
-                if(_minimizeCommand == null)
-                {
-                    _minimizeCommand = new MinimizeCommand(MinimizeWindow);
-                }
-                return _minimizeCommand;
+                return _minimizeCommand ?? (_minimizeCommand = new RelayCommand(o => WindowService.MinimizeWindow()));
             }
         }
 
-        private MaximizeCommand _maximizeCommand;
-        public MaximizeCommand MaximizeCommand
+        private RelayCommand _maximizeCommand;
+        public RelayCommand MaximizeCommand
         {
             get
             {
-                if (_maximizeCommand == null)
-                {
-                    _maximizeCommand = new MaximizeCommand(MaximizeWindow);
-                }
-                return _maximizeCommand;
+                return _maximizeCommand ?? (_maximizeCommand = new RelayCommand(o => WindowService.MaximizeWindow()));
             }
         }
-
-        public RelayCommand DragMoveCommand { get; set; }
-
 
         public MainViewModel()
         {
             drives = DriveInfo.GetDrives().ToList();
+
             StartupConfiguration();
 
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
@@ -256,7 +244,7 @@ namespace FileManager.ViewModels
 
         public async void OpenFileOrFolder()
         {
-            if (CheckFileOrFolder(Element.Path))
+            if (FileService.CheckFileOrFolder(Element.Path))
             {
                 BackButtonState = Visibility.Visible;
                 _currentPath = Element.Path;
@@ -281,7 +269,7 @@ namespace FileManager.ViewModels
             Info = "Name: " + Element.Name + "\n";
             
             //check our selected element folder or file
-            if (!CheckFileOrFolder(Element.Path))
+            if (!FileService.CheckFileOrFolder(Element.Path))
             {
                 //write file info
                 FileInfo fileInfo = new FileInfo(Element.Path);
@@ -292,88 +280,8 @@ namespace FileManager.ViewModels
             }
             //write folder info
             Info += "Type: Folder\n";
-            Info += "Size: " + await DirSize(new DirectoryInfo(Element.Path)) + " байт.\n";
-            Info += "Count Files: " + GetFilesCount(new DirectoryInfo(Element.Path)) + "\n";
-        }
-
-        //caculating folder size
-        private async Task<long> DirSize(DirectoryInfo d, long limit = 100)
-        {
-            try
-            {
-                // Add file sizes.
-                long Size = 0;
-                FileInfo[] fis = d.GetFiles();
-                foreach (FileInfo fi in fis)
-                {
-                    Size += fi.Length;
-                    if (limit > 0 && Size > limit)
-                        return Size;
-                }
-                // Add subdirectory sizes.
-                DirectoryInfo[] dis = d.GetDirectories();
-                foreach (DirectoryInfo di in dis)
-                {
-                    Size += await DirSize(di, limit);
-                    if (limit > 0 && Size > limit)
-                        return Size;
-                }
-                return (Size);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return 0;
-            }
-            
-        }
-
-        private int GetFilesCount(DirectoryInfo d)
-        {
-            try
-            {
-                return d.GetFiles().Count() + d.GetDirectories().Count();
-            }
-            catch(UnauthorizedAccessException ex)
-            {
-                return 0;
-            }
-        }
-
-        private bool CheckFileOrFolder(string path)
-        {
-            try
-            {
-                FileAttributes attr = File.GetAttributes(path);
-                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-                {
-                    return true;
-                }
-                return false;
-            } 
-            catch(IOException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
-            }
-        }
-
-        //methods for upper panel
-        private void MinimizeWindow()
-        {
-            Application.Current.MainWindow.WindowState = WindowState.Minimized;
-        }
-
-        private void MaximizeWindow()
-        {
-            if (Application.Current.MainWindow.WindowState != WindowState.Maximized)
-                Application.Current.MainWindow.WindowState = WindowState.Maximized;
-            else
-                Application.Current.MainWindow.WindowState = WindowState.Normal;
-        }
-
-        private void CloseWindow()
-        {
-            Application.Current.Shutdown();
+            Info += "Size: " + await FileService.DirSize(new DirectoryInfo(Element.Path)) + " байт.\n";
+            Info += "Count Files: " + FileService.GetFilesCount(new DirectoryInfo(Element.Path)) + "\n";
         }
     }
 }
