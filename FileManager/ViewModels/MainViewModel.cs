@@ -75,11 +75,7 @@ namespace FileManager.ViewModels
         {
             get
             {
-                if(_openCommand == null)
-                {
-                    _openCommand = new RelayCommand(o => OpenFileOrFolder());
-                }
-                return _openCommand;
+                return _openCommand ?? (_openCommand = new RelayCommand(o => OpenFileOrFolder()));
             }
         }
 
@@ -88,11 +84,7 @@ namespace FileManager.ViewModels
         {
             get
             {
-                if(_searchCommand == null)
-                {
-                    _searchCommand = new RelayCommand(o => SearchFolderAndFiles());
-                }
-                return _searchCommand;
+                return _searchCommand ?? (_searchCommand = new RelayCommand(o => SearchFolderAndFiles()));
             }
         }
 
@@ -101,11 +93,7 @@ namespace FileManager.ViewModels
         {
             get
             {
-                if(_comeBackCommand == null)
-                {
-                    _comeBackCommand = new RelayCommand(o => ComeBackToThePastDirectory());
-                }
-                return _comeBackCommand;
+                return _comeBackCommand ?? (_comeBackCommand = new RelayCommand(o => ComeBackToThePastDirectory()));
             }
         }
 
@@ -114,11 +102,7 @@ namespace FileManager.ViewModels
         {
             get
             {
-                if(_closeCommand == null)
-                {
-                    _closeCommand = new RelayCommand(o => CloseWindow());
-                }
-                return _closeCommand;
+                return _closeCommand ?? (_closeCommand = new RelayCommand(o => CloseWindow()));
             }
         }
 
@@ -127,11 +111,7 @@ namespace FileManager.ViewModels
         {
             get
             {
-                if(_minimizeCommand == null)
-                {
-                    _minimizeCommand = new RelayCommand(o => MinimizeWindow());
-                }
-                return _minimizeCommand;
+                return _minimizeCommand ?? (_minimizeCommand = new RelayCommand(o => MinimizeWindow()));
             }
         }
 
@@ -140,11 +120,7 @@ namespace FileManager.ViewModels
         {
             get
             {
-                if (_maximizeCommand == null)
-                {
-                    _maximizeCommand = new RelayCommand(o => MaximizeWindow());
-                }
-                return _maximizeCommand;
+                return _maximizeCommand ?? (_maximizeCommand = new RelayCommand(o => MaximizeWindow()));
             }
         }
 
