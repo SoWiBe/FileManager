@@ -67,7 +67,7 @@ namespace FileManager.ViewModels
             }
         }
 
-        private readonly string _startPath = "C:\\";
+        private List<DriveInfo> drives;
 
         //create commands for communication with buttons, doubleclicks and etc
         private OpenCommand _openCommand;
@@ -153,7 +153,8 @@ namespace FileManager.ViewModels
 
         public MainViewModel()
         {
-            SetFoldersAndFiles(_startPath);
+            drives = DriveInfo.GetDrives().ToList();
+            StartupConfiguration();
 
             ElementsOfDirectory = new ObservableCollection<IModel>(sourceItems);
             
@@ -164,9 +165,21 @@ namespace FileManager.ViewModels
 
         private void StartupConfiguration()
         {
-            sourceItems.Add(new FolderModel() { Name = new DirectoryInfo("C:\\").Name, Path = "C:\\", Icon = "/Images/folder.png" });
-            sourceItems.Add(new FolderModel() { Name = new DirectoryInfo("D:\\").Name, Path = "D:\\", Icon = "/Images/folder.png" });
-            sourceItems.Add(new FolderModel() { Name = new DirectoryInfo("E:\\").Name, Path = "E:\\", Icon = "/Images/folder.png" });
+            sourceItems.Clear();
+
+            foreach (var item in drives)
+            {
+                sourceItems.Add(new FolderModel() { Name = new DirectoryInfo(item.Name).Name, Path = item.Name, Icon = "/Images/folder.png" });
+            }
+
+            if (ElementsOfDirectory != null)
+            {
+                ElementsOfDirectory.Clear();
+                foreach (var value in sourceItems)
+                {
+                    ElementsOfDirectory.Add(value);
+                }
+            }
         }
 
         //search realization
@@ -227,12 +240,14 @@ namespace FileManager.ViewModels
 
         private async void ComeBackToThePastDirectory()
         {
-            var pastPath = Directory.GetParent(_currentPath);
-
-            if (pastPath.FullName.Equals(_startPath))
+            if (drives.Any(item => item.Name.Equals(_currentPath)))
             {
                 BackButtonState = Visibility.Hidden;
+                StartupConfiguration();
+                return;
             }
+
+            var pastPath = Directory.GetParent(_currentPath);
 
             await SetFoldersAndFiles(pastPath.FullName);
 
@@ -326,12 +341,20 @@ namespace FileManager.ViewModels
 
         private bool CheckFileOrFolder(string path)
         {
-            FileAttributes attr = File.GetAttributes(path);
-            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+            try
             {
-                return true;
+                FileAttributes attr = File.GetAttributes(path);
+                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                {
+                    return true;
+                }
+                return false;
+            } 
+            catch(IOException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
             }
-            return false;
         }
 
         //methods for upper panel
