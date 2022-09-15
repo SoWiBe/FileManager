@@ -1,19 +1,38 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Colors -->
-    <SolidColorBrush x:Key="PrimaryColor" Color="#EF3E36"/>
-    <SolidColorBrush x:Key="SecundaryBackgroundColor" Color="#EF3E36"/>
 
+    <!-- Background Colors -->
+    <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#EF3E36"/>
+    <SolidColorBrush x:Key="SecundaryBackgroundColor" Color="#FFFFFF"/>
+
+    <!-- Primary Colors -->
+    <SolidColorBrush x:Key="PrimaryRedColor" Color="#EF3E36"/>
+    <SolidColorBrush x:Key="PrimaryGrayColor" Color="#64677A"/>
+
+    <!-- Secundary Colors -->
+    <SolidColorBrush x:Key="SecundaryRedColor" Color="#FF6E66"/>
+    <SolidColorBrush x:Key="SecundaryGrayColor" Color="#CECECE"/>
+
+    <!-- Tertiary Colors -->
+    <SolidColorBrush x:Key="TertiaryRedColor" Color="#F7837D"/>
+    
+    
     <!-- Borders -->
     <Style x:Key="UpperBorderStyle" TargetType="Border">
-        <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundColor}"/>
     </Style>
     <Style x:Key="RightBorderStyle" TargetType="Border">
-        <Setter Property="BorderBrush" Value="#EF3E36"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryRedColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="CornerRadius" Value="10"/>
     </Style>
 
+    <!-- Start: ToggleButtonStyle -->
+    <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        
+    </Style>
+    
     <!-- TextBox -->
     <Style TargetType="TextBox" x:Key="SearchTextBox">
         <Setter Property="Foreground" Value="Black"/>
