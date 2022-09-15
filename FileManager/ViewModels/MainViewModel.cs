@@ -162,7 +162,7 @@ namespace FileManager.ViewModels
 
             BackButtonState = Visibility.Hidden;
 
-            //ThemeService.ThemeChange(false);
+            ThemeService.ThemeChange(false);
         }
 
         

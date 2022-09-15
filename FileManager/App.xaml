@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="./View/Themes/SearchTextBox.xaml"/>-->
                 <ResourceDictionary Source="./View/Themes/RedTheme.xaml"/>
                 <ResourceDictionary Source="./View/Themes/LightTheme.xaml"/>
-                
+                <ResourceDictionary Source="./View/Themes/ToggleButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

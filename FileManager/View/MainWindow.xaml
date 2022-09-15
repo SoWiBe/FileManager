@@ -170,7 +170,8 @@
 
                     <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center"
                           IsChecked="{Binding ThemeStatus}"
-                      Style="{DynamicResource ResourceKey=ToggleButtonStyle}"/>
+                          Style="{StaticResource ToggleButtonStyle}"
+                         />
                 </StackPanel>
             </Grid>
         </Border>

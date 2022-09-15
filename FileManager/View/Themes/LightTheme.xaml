@@ -3,15 +3,15 @@
     <!-- Colors -->
 
     <!-- Background Colors -->
-    <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#EEE4E1"/>
+    <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#E6BEAE"/>
     <SolidColorBrush x:Key="SecundaryBackgroundColor" Color="#FFFFFF"/>
 
     <!-- Primary Colors -->
-    <SolidColorBrush x:Key="PrimaryRedColor" Color="#EEE4E1"/>
+    <SolidColorBrush x:Key="PrimaryRedColor" Color="#E6BEAE"/>
     <SolidColorBrush x:Key="PrimaryGrayColor" Color="#E7D8C9"/>
 
     <!-- Secundary Colors -->
-    <SolidColorBrush x:Key="SecundaryRedColor" Color="#FF6E66"/>
+    <SolidColorBrush x:Key="SecundaryRedColor" Color="#E6BEAE"/>
     <SolidColorBrush x:Key="SecundaryGrayColor" Color="#ECF8F8"/>
 
     <!-- Tertiary Colors -->
@@ -29,86 +29,7 @@
     </Style>
 
     <!-- Start: ToggleButtonStyle -->
-    <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource SecundaryGrayColor}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryGrayColor}"/>
-        <Setter Property="Height" Value="20"/>
-        <Setter Property="Width" Value="35"/>
-        <Setter Property="MaxHeight" Value="20"/>
-        <Setter Property="MaxWidth" Value="35"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Grid>
-                        <Border Name="Border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="7"
-                                Height="14"
-                                Width="35"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
-                            <Border.Effect>
-                                <DropShadowEffect ShadowDepth="0.5" Opacity=".2"/>
-                            </Border.Effect>
-                        </Border>
-                        <Ellipse Name="Ellipse"
-                                 Height="20"
-                                 Width="20"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Left"
-                                 Fill="{DynamicResource SecundaryBackgroundColor}"
-                                 Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="3"/>
-
-
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <!-- EventTrigger Checked -->
-                        <EventTrigger RoutedEvent="Checked">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.Target="{Binding ElementName=Border}"
-                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                    To="#E1A6A3" 
-                                                    Duration="0:0:0.3"/>
-                                    <ThicknessAnimation Storyboard.TargetName="Ellipse"
-                                                        Storyboard.TargetProperty="Margin"
-                                                        To="15 0 0 0" 
-                                                        Duration="0:0:0.3"/>
-
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <!-- EventTrigger Unchecked -->
-                        <EventTrigger RoutedEvent="Unchecked">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.Target="{Binding ElementName=Border}"
-                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                    To="#CECECE" 
-                                                    Duration="0:0:0.3"/>
-                                    <ThicknessAnimation Storyboard.TargetName="Ellipse"
-                                                        Storyboard.TargetProperty="Margin"
-                                                        To="0 0 0 0" 
-                                                        Duration="0:0:0.3"/>
-
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-
-                        <!--<Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Ellipse"
-                                    Property="Fill"
-                                    Value="{DynamicResource ResourceKey=SecundaryRedColor}"/>
-                            <Setter TargetName="Ellipse"
-                                    Property="Stroke"
-                                    Value="{DynamicResource ResourceKey=PrimaryRedColor}"/>
-                        </Trigger>-->
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    
 
     <!-- TextBox -->
     <Style TargetType="TextBox" x:Key="SearchTextBox">
@@ -193,10 +114,9 @@
                                 <VisualState x:Name="Unselected"/>
                                 <VisualState x:Name="Selected">
                                     <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.Target="{Binding ElementName=BorderMain}"
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="BorderMain"
                                                                       Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{DynamicResource PrimaryBackgroundColor}"/>
+                                            <EasingColorKeyFrame KeyTime="0" Value="#E6BEAE"/>
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
