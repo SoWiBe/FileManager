@@ -15,6 +15,7 @@
                                     Source="{Binding Icon}"
                                     Height="10"
                                     Width="10"
+                                    Margin="3"
                                     />
                                 <Label VerticalAlignment="Center"
                                        Content="{Binding Name}" 

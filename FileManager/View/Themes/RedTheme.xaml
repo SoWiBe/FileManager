@@ -29,7 +29,7 @@
     </Style>
 
     <!-- Start: ToggleButtonStyle -->
-    <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+    <!--<Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource SecundaryGrayColor}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryGrayColor}"/>
         <Setter Property="Height" Value="20"/>
@@ -63,7 +63,7 @@
                         
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!-- EventTrigger Checked -->
+                        --><!-- EventTrigger Checked --><!--
                         <EventTrigger RoutedEvent="Checked">
                             <BeginStoryboard>
                                 <Storyboard>
@@ -79,7 +79,7 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
-                        <!-- EventTrigger Unchecked -->
+                        --><!-- EventTrigger Unchecked --><!--
                         <EventTrigger RoutedEvent="Unchecked">
                             <BeginStoryboard>
                                 <Storyboard>
@@ -108,7 +108,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
     
     <!-- TextBox -->
     <Style TargetType="TextBox" x:Key="SearchTextBox">

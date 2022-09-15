@@ -13,15 +13,15 @@ namespace FileManager.ViewModels.Services
         {
             try
             {
-                MessageBox.Show(themeStatus.ToString());
-                var uri = new Uri("./View/Themes/LightTheme.xaml", UriKind.Relative);
+                var uri = new Uri(@"View/Themes/LightTheme.xaml", UriKind.Relative);
+
                 if (themeStatus)
                 {
-                    uri = new Uri("./View/Themes/LightTheme.xaml", UriKind.Relative);
+                    uri = new Uri(@"View/Themes/RedTheme.xaml", UriKind.Relative);
                 }
-
+                MessageBox.Show(uri.ToString());
                 ResourceDictionary resourceDictionary = Application.LoadComponent(uri) as ResourceDictionary;
-                //Application.Current.Resources.Clear();
+                Application.Current.Resources.Clear();
                 Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
             } 
             catch( Exception ex)
