@@ -26,12 +26,13 @@
             <RowDefinition Height="184*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.ColumnSpan="2" Grid.Row="0"
-                Background="#1B4079"
+        <Border Grid.ColumnSpan="3" Grid.Row="0"
+                Style="{DynamicResource ResourceKey=UpperBorderStyle}"
                 MouseDown="Border_MouseDown">
 
             <Grid HorizontalAlignment="Stretch"
@@ -75,7 +76,8 @@
 
         <StackPanel Orientation="Horizontal"
                     VerticalAlignment="Bottom"
-                    Grid.Row="1">
+                    Grid.Row="1" Grid.Column="1"
+                    >
             <Button Height="15"
                     Margin="10 0 0 0"
                     Command="{Binding ComeBackCommand}"
@@ -88,7 +90,7 @@
                 </Button.Template>
             </Button>
             <TextBox
-                Style="{StaticResource SearchTextBox}" 
+                Style="{DynamicResource ResourceKey=SearchTextBox}" 
                 Width="150"
                 Height="25"
                 HorizontalAlignment="Left"
@@ -96,7 +98,7 @@
         </StackPanel>
 
         <Label
-            Grid.Column="1"
+            Grid.Column="2"
             Grid.Row="1"
             Content="Additional Information"
             HorizontalAlignment="Center"
@@ -112,12 +114,12 @@
         </Label>
         
         <ListBox
-            Grid.Column="0" Grid.Row="2"
+            Grid.Column="1" Grid.Row="2"
             ItemsSource="{Binding ElementsOfDirectory}"
             BorderThickness="0"
             SelectedItem="{Binding Element}"
             Background="Transparent"
-            ItemContainerStyle="{StaticResource ListElement}" 
+            ItemContainerStyle="{DynamicResource ResourceKey=ListElement}" 
             Margin="10,10,10,7">
             <i:Interaction.Triggers>
 
@@ -130,12 +132,10 @@
         </ListBox>
 
         <Border
-            Grid.Column="1" Grid.Row="2"
+            Grid.Column="2" Grid.Row="2"
             Margin="10"
             Height="Auto"
-            BorderBrush="#1B4079"
-            BorderThickness="1"
-            CornerRadius="10">
+            Style="{DynamicResource ResourceKey=RightBorderStyle}">
             <TextBlock 
                     Text="{Binding Info, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Foreground="Black"
@@ -151,6 +151,29 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
+        </Border>
+
+        <Border Grid.RowSpan="2" Grid.Row="1" Grid.Column="0"
+                Style="{DynamicResource ResourceKey=RightBorderStyle}"
+                Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <Image Source="/Images/theme.png"
+                           Width="30"
+                           Margin="5"/>
+
+                    <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ThemeStatus}"
+                          Style="{StaticResource ToggleButtonStyle}"
+                         />
+                </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </Window>

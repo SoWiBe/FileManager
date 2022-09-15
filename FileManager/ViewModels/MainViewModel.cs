@@ -81,7 +81,17 @@ namespace FileManager.ViewModels
             }
         }
 
-        
+        private bool _themeStatus;
+        public bool ThemeStatus
+        {
+            get => _themeStatus;
+            set
+            {
+                _themeStatus = value;
+                OnPropertyChanged();
+                ThemeService.ThemeChange(_themeStatus);
+            }
+        }
 
         //create commands for communication with buttons, doubleclicks and etc
         private RelayCommand _openCommand;
@@ -140,6 +150,8 @@ namespace FileManager.ViewModels
 
         public MainViewModel()
         {
+
+
             drives = DriveInfo.GetDrives().ToList();
 
             StartupConfiguration();
@@ -149,8 +161,11 @@ namespace FileManager.ViewModels
             Info = "Just some click to file or folder)";
 
             BackButtonState = Visibility.Hidden;
+
+            ThemeService.ThemeChange(false);
         }
 
+        
         private void StartupConfiguration()
         {
             sourceItems.Clear();

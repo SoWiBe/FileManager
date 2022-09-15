@@ -3,21 +3,21 @@
     <!-- Colors -->
 
     <!-- Background Colors -->
-    <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#EF3E36"/>
+    <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#E6BEAE"/>
     <SolidColorBrush x:Key="SecundaryBackgroundColor" Color="#FFFFFF"/>
 
     <!-- Primary Colors -->
-    <SolidColorBrush x:Key="PrimaryRedColor" Color="#EF3E36"/>
-    <SolidColorBrush x:Key="PrimaryGrayColor" Color="#64677A"/>
+    <SolidColorBrush x:Key="PrimaryRedColor" Color="#E6BEAE"/>
+    <SolidColorBrush x:Key="PrimaryGrayColor" Color="#E7D8C9"/>
 
     <!-- Secundary Colors -->
-    <SolidColorBrush x:Key="SecundaryRedColor" Color="#FF6E66"/>
-    <SolidColorBrush x:Key="SecundaryGrayColor" Color="#CECECE"/>
+    <SolidColorBrush x:Key="SecundaryRedColor" Color="#E6BEAE"/>
+    <SolidColorBrush x:Key="SecundaryGrayColor" Color="#ECF8F8"/>
 
     <!-- Tertiary Colors -->
-    <SolidColorBrush x:Key="TertiaryRedColor" Color="#F7837D"/>
-    
-    
+    <SolidColorBrush x:Key="TertiaryRedColor" Color="#E6BEAE"/>
+
+
     <!-- Borders -->
     <Style x:Key="UpperBorderStyle" TargetType="Border">
         <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundColor}"/>
@@ -27,6 +27,9 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="CornerRadius" Value="10"/>
     </Style>
+
+    <!-- Start: ToggleButtonStyle -->
+    
 
     <!-- TextBox -->
     <Style TargetType="TextBox" x:Key="SearchTextBox">
@@ -38,8 +41,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
                     <Border CornerRadius="10"
-                            Background="#EF3E36"
-                            BorderBrush="#EF3E36"
+                            Background="{DynamicResource PrimaryBackgroundColor}"
+                            BorderBrush="{DynamicResource PrimaryBackgroundColor}"
                             BorderThickness="1">
                         <Grid>
 
@@ -87,7 +90,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
-                    <Border Name="Border"
+                    <Border x:Name="BorderMain"
                             Height="22">
                         <Border.Background>
                             <SolidColorBrush Color="Transparent"/>
@@ -111,10 +114,9 @@
                                 <VisualState x:Name="Unselected"/>
                                 <VisualState x:Name="Selected">
                                     <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="BorderMain"
                                                                       Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="#EF3E36"/>
+                                            <EasingColorKeyFrame KeyTime="0" Value="#E6BEAE"/>
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -147,7 +149,7 @@
     <!--ScrollBars-->
     <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
-        <Setter Property="Foreground" Value="#EF3E36" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBackgroundColor}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="8" />
         <Setter Property="Template">

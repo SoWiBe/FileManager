@@ -192,6 +192,7 @@
     <Compile Include="Models\DriveModel.cs" />
     <Compile Include="ViewModels\Commands\RelayCommand.cs" />
     <Compile Include="ViewModels\Services\FileService.cs" />
+    <Compile Include="ViewModels\Services\ThemeService.cs" />
     <Compile Include="ViewModels\Services\WindowService.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -206,6 +207,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Themes\SearchTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Themes\LightTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Themes\ToggleButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -269,6 +278,7 @@
       <DependentUpon>FilesModel.edmx</DependentUpon>
       <LastGenOutput>FilesModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\theme.png" />
     <Resource Include="Images\drive.png" />
   </ItemGroup>
   <ItemGroup>
