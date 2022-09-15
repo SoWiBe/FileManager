@@ -26,11 +26,12 @@
             <RowDefinition Height="184*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.ColumnSpan="2" Grid.Row="0"
+        <Border Grid.ColumnSpan="3" Grid.Row="0"
                 Style="{DynamicResource ResourceKey=UpperBorderStyle}"
                 MouseDown="Border_MouseDown">
 
@@ -75,7 +76,8 @@
 
         <StackPanel Orientation="Horizontal"
                     VerticalAlignment="Bottom"
-                    Grid.Row="1">
+                    Grid.Row="1" Grid.Column="1"
+                    >
             <Button Height="15"
                     Margin="10 0 0 0"
                     Command="{Binding ComeBackCommand}"
@@ -96,7 +98,7 @@
         </StackPanel>
 
         <Label
-            Grid.Column="1"
+            Grid.Column="2"
             Grid.Row="1"
             Content="Additional Information"
             HorizontalAlignment="Center"
@@ -112,7 +114,7 @@
         </Label>
         
         <ListBox
-            Grid.Column="0" Grid.Row="2"
+            Grid.Column="1" Grid.Row="2"
             ItemsSource="{Binding ElementsOfDirectory}"
             BorderThickness="0"
             SelectedItem="{Binding Element}"
@@ -130,7 +132,7 @@
         </ListBox>
 
         <Border
-            Grid.Column="1" Grid.Row="2"
+            Grid.Column="2" Grid.Row="2"
             Margin="10"
             Height="Auto"
             Style="{DynamicResource ResourceKey=RightBorderStyle}">
@@ -149,6 +151,12 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
+        </Border>
+
+        <Border Grid.RowSpan="2" Grid.Row="1" Grid.Column="0"
+                Style="{DynamicResource ResourceKey=RightBorderStyle}"
+                Margin="5">
+            
         </Border>
     </Grid>
 </Window>
