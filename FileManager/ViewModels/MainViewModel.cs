@@ -244,18 +244,25 @@ namespace FileManager.ViewModels
 
         public async void OpenFileOrFolder()
         {
-            if (FileService.CheckFileOrFolder(Element.Path))
+            try
             {
-                BackButtonState = Visibility.Visible;
-                _currentPath = Element.Path;
-                await SetFoldersAndFiles(Element.Path);
-                return;
+                if (FileService.CheckFileOrFolder(Element.Path))
+                {
+                    BackButtonState = Visibility.Visible;
+                    _currentPath = Element.Path;
+                    await SetFoldersAndFiles(Element.Path);
+                    return;
+                }
+
+                //write info about file in db
+                await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() });
+
+                System.Diagnostics.Process.Start(Element.Path);
+            } 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
-
-            //write info about file in db
-            await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() });
-
-            System.Diagnostics.Process.Start(Element.Path);
         }
 
         //activating after one click on the listbox
