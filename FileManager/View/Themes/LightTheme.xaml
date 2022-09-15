@@ -40,7 +40,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Grid>
-                        <Border x:Name="Border"
+                        <Border Name="Border"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="7"
                                 Height="14"
@@ -51,7 +51,7 @@
                                 <DropShadowEffect ShadowDepth="0.5" Opacity=".2"/>
                             </Border.Effect>
                         </Border>
-                        <Ellipse x:Name="Ellipse"
+                        <Ellipse Name="Ellipse"
                                  Height="20"
                                  Width="20"
                                  VerticalAlignment="Center"
@@ -67,7 +67,7 @@
                         <EventTrigger RoutedEvent="Checked">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Storyboard.TargetName="Border"
+                                    <ColorAnimation Storyboard.Target="{Binding ElementName=Border}"
                                                     Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
                                                     To="#E1A6A3" 
                                                     Duration="0:0:0.3"/>
@@ -83,7 +83,7 @@
                         <EventTrigger RoutedEvent="Unchecked">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Storyboard.TargetName="Border"
+                                    <ColorAnimation Storyboard.Target="{Binding ElementName=Border}"
                                                     Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
                                                     To="#CECECE" 
                                                     Duration="0:0:0.3"/>
@@ -96,14 +96,14 @@
                             </BeginStoryboard>
                         </EventTrigger>
 
-                        <Trigger Property="IsChecked" Value="True">
+                        <!--<Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Ellipse"
                                     Property="Fill"
                                     Value="{DynamicResource ResourceKey=SecundaryRedColor}"/>
                             <Setter TargetName="Ellipse"
                                     Property="Stroke"
                                     Value="{DynamicResource ResourceKey=PrimaryRedColor}"/>
-                        </Trigger>
+                        </Trigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -169,7 +169,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
-                    <Border Name="Border"
+                    <Border x:Name="BorderMain"
                             Height="22">
                         <Border.Background>
                             <SolidColorBrush Color="Transparent"/>
@@ -193,7 +193,7 @@
                                 <VisualState x:Name="Unselected"/>
                                 <VisualState x:Name="Selected">
                                     <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                        <ColorAnimationUsingKeyFrames Storyboard.Target="{Binding ElementName=BorderMain}"
                                                                       Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
                                             <EasingColorKeyFrame KeyTime="0"
                                                                  Value="{DynamicResource PrimaryBackgroundColor}"/>

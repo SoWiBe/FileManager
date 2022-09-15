@@ -89,7 +89,7 @@ namespace FileManager.ViewModels
             {
                 _themeStatus = value;
                 OnPropertyChanged();
-                MessageBox.Show(_themeStatus.ToString());
+                ThemeService.ThemeChange(_themeStatus);
             }
         }
 
@@ -150,6 +150,8 @@ namespace FileManager.ViewModels
 
         public MainViewModel()
         {
+
+
             drives = DriveInfo.GetDrives().ToList();
 
             StartupConfiguration();
@@ -159,8 +161,11 @@ namespace FileManager.ViewModels
             Info = "Just some click to file or folder)";
 
             BackButtonState = Visibility.Hidden;
+
+            //ThemeService.ThemeChange(false);
         }
 
+        
         private void StartupConfiguration()
         {
             sourceItems.Clear();

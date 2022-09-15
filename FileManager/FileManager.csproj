@@ -192,6 +192,7 @@
     <Compile Include="Models\DriveModel.cs" />
     <Compile Include="ViewModels\Commands\RelayCommand.cs" />
     <Compile Include="ViewModels\Services\FileService.cs" />
+    <Compile Include="ViewModels\Services\ThemeService.cs" />
     <Compile Include="ViewModels\Services\WindowService.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
