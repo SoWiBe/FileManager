@@ -1,6 +1,10 @@
 # FileManager
 This FileManager was created for *Webtronics* how test task.
-![image](https://user-images.githubusercontent.com/68136994/189626203-4a92f6ab-4ad5-4333-b54e-e78eaccddbeb.png)
+- Light Theme </br>
+![image](https://user-images.githubusercontent.com/68136994/190405575-5c696671-0be0-4874-ad98-ba8f840ac8ea.png)
+- Red Theme </br>
+![image](https://user-images.githubusercontent.com/68136994/190405058-30b2d564-c3c4-481f-81bc-fa8b7343f004.png)
+
 
 
 
@@ -17,6 +21,7 @@ Functional requirements:
   - Id
   - Filename
   - Date visited
+- Change themes
   
 ## How open this program ##
 **Some steps**:
