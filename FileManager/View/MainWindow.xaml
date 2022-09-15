@@ -39,11 +39,9 @@
                 <Label Content="FileManager"
                        Foreground="White"
                        FontWeight="SemiBold"
-                       VerticalAlignment="Center"  
-                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center" HorizontalAlignment="Left"
                        />
-                <StackPanel HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center"
                             Orientation="Horizontal">
                     <Button Width="20" Height="20"
                             x:Name="btnMinimize"
@@ -102,7 +100,7 @@
             Grid.Row="1"
             Content="Additional Information"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center" Height="34" Width="254">
+            VerticalAlignment="Bottom" Height="34" Width="254">
             <Label.Style>
                 <Style TargetType="Label">
                     <Setter Property="Foreground" Value="Black"/>
@@ -114,8 +112,7 @@
         </Label>
         
         <ListBox
-            Grid.Column="0"
-            Grid.Row="2"
+            Grid.Column="0" Grid.Row="2"
             ItemsSource="{Binding ElementsOfDirectory}"
             BorderThickness="0"
             SelectedItem="{Binding Element}"
@@ -133,9 +130,9 @@
         </ListBox>
 
         <Border
-            Grid.Column="1"
-            Grid.Row="2"
+            Grid.Column="1" Grid.Row="2"
             Margin="10"
+            Height="Auto"
             BorderBrush="#1B4079"
             BorderThickness="1"
             CornerRadius="10">

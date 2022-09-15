@@ -4,7 +4,6 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
-                    
                     <Border Name="Border"
                             Height="22">
                         <Border.Background>
@@ -40,8 +39,6 @@
 
                         </VisualStateManager.VisualStateGroups>
                     </Border>
-
-                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
