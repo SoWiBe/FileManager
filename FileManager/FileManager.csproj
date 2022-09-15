@@ -269,6 +269,7 @@
       <DependentUpon>FilesModel.edmx</DependentUpon>
       <LastGenOutput>FilesModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\theme.png" />
     <Resource Include="Images\drive.png" />
   </ItemGroup>
   <ItemGroup>

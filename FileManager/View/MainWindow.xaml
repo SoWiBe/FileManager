@@ -156,7 +156,7 @@
         <Border Grid.RowSpan="2" Grid.Row="1" Grid.Column="0"
                 Style="{DynamicResource ResourceKey=RightBorderStyle}"
                 Margin="5">
-            
+            <ToggleButton/>
         </Border>
     </Grid>
 </Window>
