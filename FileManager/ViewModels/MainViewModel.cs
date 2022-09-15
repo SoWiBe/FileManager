@@ -157,7 +157,7 @@ namespace FileManager.ViewModels
 
             foreach (var item in drives)
             {
-                sourceItems.Add(new FolderModel() { Name = new DirectoryInfo(item.Name).Name, Path = item.Name, Icon = "/Images/folder.png" });
+                sourceItems.Add(new DriveModel() { Name = new DirectoryInfo(item.Name).Name, Path = item.Name, Icon = "/Images/drive.png" });
             }
 
             if (ElementsOfDirectory != null)
@@ -244,24 +244,31 @@ namespace FileManager.ViewModels
 
         public async void OpenFileOrFolder()
         {
-            if (FileService.CheckFileOrFolder(Element.Path))
+            try
             {
-                BackButtonState = Visibility.Visible;
-                _currentPath = Element.Path;
-                await SetFoldersAndFiles(Element.Path);
-                return;
+                if (FileService.CheckFileOrFolder(Element.Path))
+                {
+                    BackButtonState = Visibility.Visible;
+                    _currentPath = Element.Path;
+                    await SetFoldersAndFiles(Element.Path);
+                    return;
+                }
+
+                //write info about file in db
+                await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() });
+
+                System.Diagnostics.Process.Start(Element.Path);
+            } 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
-
-            //write info about file in db
-            await DbWriter.AddRecord(new Files() { Filename = Element.Name, DataVisited = DateTime.Now.ToString() });
-
-            System.Diagnostics.Process.Start(Element.Path);
         }
 
         //activating after one click on the listbox
         private async void OpenFileInfo()
         {
-            if (Element == null)
+            if (Element == null || drives.Any(drive => drive.Name.Equals(Element.Name)))
             {
                 return;
             }
