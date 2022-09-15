@@ -3,5 +3,4 @@
     <Style x:Key="UpperBorderStyle" TargetType="Border">
         <Setter Property="Background" Value="#EF3E36"/>
     </Style>
-    
 </ResourceDictionary>
