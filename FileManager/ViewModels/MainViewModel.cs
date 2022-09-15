@@ -81,7 +81,17 @@ namespace FileManager.ViewModels
             }
         }
 
-        
+        private bool _themeStatus;
+        public bool ThemeStatus
+        {
+            get => _themeStatus;
+            set
+            {
+                _themeStatus = value;
+                OnPropertyChanged();
+                MessageBox.Show(_themeStatus.ToString());
+            }
+        }
 
         //create commands for communication with buttons, doubleclicks and etc
         private RelayCommand _openCommand;

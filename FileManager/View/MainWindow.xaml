@@ -156,8 +156,23 @@
         <Border Grid.RowSpan="2" Grid.Row="1" Grid.Column="0"
                 Style="{DynamicResource ResourceKey=RightBorderStyle}"
                 Margin="5">
-            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center"
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <Image Source="/Images/theme.png"
+                           Width="30"
+                           Margin="5"/>
+
+                    <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center"
+                          IsChecked="{Binding ThemeStatus}"
                       Style="{DynamicResource ResourceKey=ToggleButtonStyle}"/>
+                </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </Window>
