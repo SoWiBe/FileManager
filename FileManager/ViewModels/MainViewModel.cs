@@ -13,11 +13,15 @@ using FileManager.DB;
 using FileManager.ViewModels.Commands;
 using System.Windows.Input;
 using FileManager.ViewModels.Services;
+using Prism.Mvvm;
 
 namespace FileManager.ViewModels
 {
-    public class MainViewModel : ObservableObject
+    public class MainViewModel : BindableBase
     {
+
+
+
         //main update collection folders and files
         public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
         //main collection for search, filtered, sorting and other
@@ -29,14 +33,10 @@ namespace FileManager.ViewModels
         private string _searchText;
         public string SearchText
         {
-            get
-            {
-                return _searchText;
-            }
+            get => _searchText;
             set
             {
-                _searchText = value;
-                OnPropertyChanged();
+                SetProperty(ref _searchText, value);
                 SearchFolderAndFiles();
             }
         }
@@ -45,22 +45,18 @@ namespace FileManager.ViewModels
         private string _info;
         public string Info
         {
-            get { return _info; }
-            set { _info = value; OnPropertyChanged(); }
+            get => _info;
+            set => SetProperty(ref _info, value);
         }
 
         //selected model for click on the listbox
         public IModel _selectedElement;
         public IModel Element
         {
-            get
-            {
-                return _selectedElement;
-            }
+            get => _selectedElement;
             set
             {
-                _selectedElement = value;
-                OnPropertyChanged(); 
+                SetProperty(ref _selectedElement, value);
                 OpenFileInfo();
             }
         }
@@ -70,15 +66,8 @@ namespace FileManager.ViewModels
         private Visibility _backButtonState;
         public Visibility BackButtonState
         {
-            get
-            {
-                return _backButtonState;
-            }
-            set
-            {
-                _backButtonState = value;
-                OnPropertyChanged();
-            }
+            get => _backButtonState;
+            set => SetProperty(ref _backButtonState, value);
         }
 
         private bool _themeStatus;
@@ -87,8 +76,7 @@ namespace FileManager.ViewModels
             get => _themeStatus;
             set
             {
-                _themeStatus = value;
-                OnPropertyChanged();
+                SetProperty(ref _themeStatus, value);
                 ThemeService.ThemeChange(_themeStatus);
             }
         }

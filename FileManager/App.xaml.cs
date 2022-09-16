@@ -10,6 +10,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Prism.Modularity;
+using FileManager.Module;
 
 namespace FileManager
 {
@@ -26,6 +28,12 @@ namespace FileManager
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            base.ConfigureModuleCatalog(moduleCatalog);
+            moduleCatalog.AddModule<MainModule>();
         }
     }
 }
