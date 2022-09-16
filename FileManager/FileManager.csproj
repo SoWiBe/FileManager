@@ -203,6 +203,7 @@
     </Compile>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Models\DriveModel.cs" />
+    <Compile Include="Module\MainModule.cs" />
     <Compile Include="ViewModels\Commands\RelayCommand.cs" />
     <Compile Include="ViewModels\Services\FileService.cs" />
     <Compile Include="ViewModels\Services\ThemeService.cs" />
