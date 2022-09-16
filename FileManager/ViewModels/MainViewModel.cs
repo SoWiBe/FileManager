@@ -19,15 +19,12 @@ namespace FileManager.ViewModels
 {
     public class MainViewModel : BindableBase
     {
-
-
-
-        //main update collection folders and files
-        public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
-        //main collection for search, filtered, sorting and other
-        public List<IModel> sourceItems = new List<IModel>();
-        //collection for start
-        private List<DriveInfo> drives;
+        private string _title = "File Manager";
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
+        }
 
         //search text for writing in textbox and use this for check available element in collection
         private string _searchText;
@@ -136,10 +133,15 @@ namespace FileManager.ViewModels
             }
         }
 
+        //main update collection folders and files
+        public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
+        //main collection for search, filtered, sorting and other
+        public List<IModel> sourceItems = new List<IModel>();
+        //collection for start
+        private List<DriveInfo> drives;
+
         public MainViewModel()
         {
-
-
             drives = DriveInfo.GetDrives().ToList();
 
             StartupConfiguration();
@@ -153,7 +155,7 @@ namespace FileManager.ViewModels
             ThemeService.ThemeChange(false);
         }
 
-        
+        //setup start array with drives
         private void StartupConfiguration()
         {
             sourceItems.Clear();
@@ -229,6 +231,7 @@ namespace FileManager.ViewModels
             return "Success!";
         }
 
+        //back to the past directory
         private async void ComeBackToThePastDirectory()
         {
             if (drives.Any(item => item.Name.Equals(_currentPath)))
@@ -245,6 +248,7 @@ namespace FileManager.ViewModels
             _currentPath = pastPath.FullName;
         }
 
+        //open file or folder with many files and folders
         public async void OpenFileOrFolder()
         {
             try
