@@ -15,7 +15,7 @@ namespace FileManager.Module
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var region = containerProvider.Resolve<IRegionManager>();
-            region.RegisterViewWithRegion("SearchRegion", typeof(Main));
+            //region.RegisterViewWithRegion("SearchRegion", typeof(Search));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
