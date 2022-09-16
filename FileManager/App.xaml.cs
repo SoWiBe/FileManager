@@ -33,7 +33,7 @@ namespace FileManager
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             base.ConfigureModuleCatalog(moduleCatalog);
-            moduleCatalog.AddModule<MainModule>();
+            moduleCatalog.AddModule<SearchModule>();
         }
     }
 }

@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace FileManager.Module
 {
-    public class MainModule : IModule
+    public class SearchModule : IModule
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var region = containerProvider.Resolve<IRegionManager>();
-            region.RegisterViewWithRegion("MainRegion", typeof(Main));
+            region.RegisterViewWithRegion("SearchRegion", typeof(Main));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
