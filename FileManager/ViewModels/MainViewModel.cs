@@ -13,30 +13,27 @@ using FileManager.DB;
 using FileManager.ViewModels.Commands;
 using System.Windows.Input;
 using FileManager.ViewModels.Services;
+using Prism.Mvvm;
 
 namespace FileManager.ViewModels
 {
-    public class MainViewModel : ObservableObject
+    public class MainViewModel : BindableBase
     {
-        //main update collection folders and files
-        public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
-        //main collection for search, filtered, sorting and other
-        public List<IModel> sourceItems = new List<IModel>();
-        //collection for start
-        private List<DriveInfo> drives;
+        private string _title = "File Manager";
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
+        }
 
         //search text for writing in textbox and use this for check available element in collection
         private string _searchText;
         public string SearchText
         {
-            get
-            {
-                return _searchText;
-            }
+            get => _searchText;
             set
             {
-                _searchText = value;
-                OnPropertyChanged();
+                SetProperty(ref _searchText, value);
                 SearchFolderAndFiles();
             }
         }
@@ -45,22 +42,18 @@ namespace FileManager.ViewModels
         private string _info;
         public string Info
         {
-            get { return _info; }
-            set { _info = value; OnPropertyChanged(); }
+            get => _info;
+            set => SetProperty(ref _info, value);
         }
 
         //selected model for click on the listbox
         public IModel _selectedElement;
         public IModel Element
         {
-            get
-            {
-                return _selectedElement;
-            }
+            get => _selectedElement;
             set
             {
-                _selectedElement = value;
-                OnPropertyChanged(); 
+                SetProperty(ref _selectedElement, value);
                 OpenFileInfo();
             }
         }
@@ -70,15 +63,8 @@ namespace FileManager.ViewModels
         private Visibility _backButtonState;
         public Visibility BackButtonState
         {
-            get
-            {
-                return _backButtonState;
-            }
-            set
-            {
-                _backButtonState = value;
-                OnPropertyChanged();
-            }
+            get => _backButtonState;
+            set => SetProperty(ref _backButtonState, value);
         }
 
         private bool _themeStatus;
@@ -87,8 +73,7 @@ namespace FileManager.ViewModels
             get => _themeStatus;
             set
             {
-                _themeStatus = value;
-                OnPropertyChanged();
+                SetProperty(ref _themeStatus, value);
                 ThemeService.ThemeChange(_themeStatus);
             }
         }
@@ -148,10 +133,15 @@ namespace FileManager.ViewModels
             }
         }
 
+        //main update collection folders and files
+        public ObservableCollection<IModel> ElementsOfDirectory { get; set; }
+        //main collection for search, filtered, sorting and other
+        public List<IModel> sourceItems = new List<IModel>();
+        //collection for start
+        private List<DriveInfo> drives;
+
         public MainViewModel()
         {
-
-
             drives = DriveInfo.GetDrives().ToList();
 
             StartupConfiguration();
@@ -165,7 +155,7 @@ namespace FileManager.ViewModels
             ThemeService.ThemeChange(false);
         }
 
-        
+        //setup start array with drives
         private void StartupConfiguration()
         {
             sourceItems.Clear();
@@ -241,6 +231,7 @@ namespace FileManager.ViewModels
             return "Success!";
         }
 
+        //back to the past directory
         private async void ComeBackToThePastDirectory()
         {
             if (drives.Any(item => item.Name.Equals(_currentPath)))
@@ -257,6 +248,7 @@ namespace FileManager.ViewModels
             _currentPath = pastPath.FullName;
         }
 
+        //open file or folder with many files and folders
         public async void OpenFileOrFolder()
         {
             try

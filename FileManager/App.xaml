@@ -1,17 +1,15 @@
-﻿<Application x:Class="FileManager.App"
+﻿<prism:PrismApplication x:Class="FileManager.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:FileManager"
-             StartupUri="View/MainWindow.xaml">
-    <Application.Resources>
+             xmlns:prism="http://prismlibrary.com/">
+    <prism:PrismApplication.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="./View/Themes/ListElement.xaml"/>
-                <ResourceDictionary Source="./View/Themes/SearchTextBox.xaml"/>-->
                 <ResourceDictionary Source="./View/Themes/RedTheme.xaml"/>
                 <ResourceDictionary Source="./View/Themes/LightTheme.xaml"/>
                 <ResourceDictionary Source="./View/Themes/ToggleButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </Application.Resources>
-</Application>
+    </prism:PrismApplication.Resources>
+</prism:PrismApplication>
